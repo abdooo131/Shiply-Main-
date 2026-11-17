@@ -16,6 +16,7 @@
   --shadow:0 1px 2px #1d29391a;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
 html,body{height:100%}
 body{font:400 14px/22px Lato,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
 ::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px}
@@ -243,6 +244,104 @@ td .sub{color:var(--text2);font-size:12px;line-height:16px}
   .kv{grid-template-columns:110px 1fr}
   .help{bottom:16px;right:16px}
 }
+/* create order (matches Bosta create order) */
+#v-create.active{margin:-24px;gap:0}
+.co-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 96px;border-bottom:1px solid var(--border);background:#fff;flex-wrap:wrap}
+.co-head-l{display:flex;align-items:center;gap:16px}
+.co-back{padding:8px;background:#fff;border:1px solid var(--input);border-radius:8px;box-shadow:0 1px 2px #1018280d;cursor:pointer;display:grid;color:var(--text)}
+.co-back:hover{background:var(--hover)}
+.co-actions{display:flex;gap:12px}
+.co-body{padding:24px 96px;display:flex;flex-direction:column;gap:24px}
+.co-types{display:flex;gap:12px;flex-wrap:wrap}
+.co-type{flex:1;min-width:150px;display:flex;align-items:center;justify-content:center;gap:12px;padding:12px 16px;background:#fff;border:1px solid var(--border);border-radius:12px;cursor:pointer;font:600 14px/20px Lato}
+.co-type input{position:absolute;opacity:0;pointer-events:none}
+.co-type svg.i{width:24px;height:24px;color:var(--text2)}
+.co-type:hover{background:var(--hover)}
+.co-type:has(input:checked){background:var(--teal-bg);border-color:#9fdee4}
+.co-type:has(input:checked) svg.i{color:var(--teal)}
+.co-form{display:flex;align-items:flex-start;gap:32px}
+.co-left{flex:2;display:flex;flex-direction:column;gap:24px;min-width:0}
+.co-right{flex:1.3;max-width:391px;display:flex;flex-direction:column;gap:24px;min-width:0}
+.co-card{background:#fff;border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column}
+.co-card-h{padding:16px 20px;background:var(--hover);border-radius:12px 12px 0 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.co-card-b{padding:20px;display:flex;flex-direction:column;gap:20px}
+.co-row{display:flex;gap:20px}.co-row>*{flex:1;min-width:0}
+.co-row.tight{gap:12px}
+.co-row.desc>*:last-child{max-width:139px}
+.fi{display:flex;flex-direction:column;gap:4px;align-items:stretch;min-width:0}
+.fi>label{display:flex;align-items:center;justify-content:space-between;gap:4px;font:600 14px/20px Lato;color:var(--text)}
+.fi .opt{font:400 12px/16px Lato;color:var(--text2);margin-right:auto}
+.fi>.btn.link{align-self:flex-start;margin-top:8px}
+.fi>.co-row{margin-top:0}
+.inp.err{border-color:var(--danger)!important;box-shadow:0 0 0 4px #fee4e2!important}
+.rate{display:inline-flex;align-items:center;gap:8px;font:600 12px/20px Lato;margin-top:4px}
+.rate .rd{width:20px;height:20px;border-radius:50%;display:grid;place-items:center}
+.rate .rd svg.i{width:10px;height:10px;stroke-width:3}
+.rate.green{color:#039855}.rate.green .rd{background:#ecfdf3}
+.rate.amber{color:var(--warn)}.rate.amber .rd{background:#fffaeb}
+.rate.gray{color:var(--text2)}.rate.gray .rd{background:#f2f4f7}
+.rate span:last-child{text-decoration:underline dotted}
+.pills{display:flex;flex-wrap:wrap;gap:12px}
+.pill{flex:1;min-width:96px;white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:8px;padding:8px 12px;background:#fff;border:1px solid var(--border);border-radius:8px;cursor:pointer;font:600 14px/20px Lato;text-align:center}
+.pill input{position:absolute;opacity:0;pointer-events:none}
+.pill small{font:400 12px/16px Lato;color:var(--text2)}
+.pill:hover{background:var(--hover)}
+.pill:has(input:checked){background:var(--teal-bg);border-color:#9fdee4}
+.pill:has(input:focus-visible),.co-type:has(input:focus-visible){box-shadow:0 0 0 4px var(--teal-ring)}
+.upload{border:1px solid var(--border);border-radius:12px;padding:16px 24px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;cursor:pointer;background:#fff}
+.upload:hover,.upload.drag{border-color:var(--teal);background:var(--teal-bg)}
+.up-ic{width:40px;height:40px;border-radius:50%;background:#f2f4f7;border:6px solid var(--hover);display:grid;place-items:center;color:var(--text2);margin-bottom:8px}
+.up-ic svg.i{width:20px;height:20px}
+.tl-teal{color:var(--teal);font-weight:600}
+.upload img{max-height:120px;border-radius:8px;margin-top:8px}
+.note{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;background:var(--teal-bg);border:1px solid var(--teal-ring);border-radius:8px}
+.note-ic{color:var(--teal);display:grid;flex:none}
+.chk{display:flex;align-items:center;gap:8px;cursor:pointer;font:400 14px/20px Lato;user-select:none}
+.chk.al{align-items:flex-start;gap:12px}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.chk .cb{width:16px;height:16px;border:1px solid var(--input);border-radius:4px;background:#fff;flex:none;display:grid;place-items:center;transition:all .15s}
+.chk.al .cb{margin-top:2px}
+.chk input:checked+.cb{background:var(--teal);border-color:var(--teal)}
+.chk input:checked+.cb::after{content:"";width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.chk input:focus-visible+.cb{box-shadow:0 0 0 4px var(--teal-ring)}
+.chk:hover .cb{border-color:var(--teal)}
+.db{display:block;margin-top:4px}
+.pay{overflow:hidden}
+.pay-b{padding:16px;display:flex;flex-direction:column;gap:16px}
+.opt-box{background:var(--hover);border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column}
+.opt-item{padding:12px;display:flex;flex-direction:column;gap:8px}
+.opt-item.bt{border-top:1px solid var(--border)}
+.affix{display:flex;align-items:center;height:40px;border:1px solid var(--input);border-radius:8px;background:#fff;box-shadow:var(--shadow);padding:0 12px;gap:6px;transition:border-color .15s,box-shadow .15s;min-width:0}
+.affix span{color:var(--text2)}
+.affix input{border:0;outline:0;flex:1;min-width:0;height:100%;background:none}
+.affix input::placeholder{color:#98a2b3;font-size:13px}
+.affix:focus-within{border-color:var(--teal);box-shadow:var(--shadow),0 0 0 4px var(--teal-ring)}
+.val-row{display:flex;gap:8px;align-items:stretch}
+.val-row .affix{flex:2}
+.val-row .btn{flex:1;padding:8px 12px;font-size:14px}
+.upsell{display:flex;align-items:center;gap:8px;padding:12px;border-radius:12px;background:linear-gradient(-92deg,#d9f4f8 .34%,#fafdfe 99.13%)}
+.upsell .caption-md{flex:1;font:600 12px/20px Lato}
+.up-ic2{width:32px;height:32px;border-radius:50%;background:var(--teal-ring);display:grid;place-items:center;color:var(--teal);flex:none}
+.up-ic2 svg.i{width:16px;height:16px}
+.upsell.on{background:var(--green-bg)}
+.pay-f{padding:12px 16px;background:var(--teal-bg);display:flex;flex-direction:column;gap:12px}
+.fees-h{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;cursor:pointer;padding:0;color:var(--text)}
+.fees-h svg.i{transition:transform .2s}
+.fees-h.open svg.i{transform:rotate(180deg)}
+.fees-h span:last-child{margin-left:auto}
+.fees-list{display:flex;flex-direction:column;gap:8px;padding:8px 0 4px 28px}
+.fees-list div{display:flex;justify-content:space-between;color:var(--text2);font-size:13px}
+.fees-list div b{color:var(--text);font-weight:600}
+@media (max-width:1200px){.co-head{padding:16px 24px}.co-body{padding:24px}}
+@media (max-width:992px){.co-form{flex-direction:column;align-items:stretch}.co-right{max-width:100%}}
+@media (max-width:768px){
+  #v-create.active{margin:-16px}
+  .co-head{padding:16px}.co-body{padding:16px}
+  .co-actions{width:100%;flex-direction:column-reverse}.co-actions .btn{width:100%}
+  .co-row,.co-row.desc{flex-direction:column}.co-row.desc>*:last-child{max-width:100%}
+  .co-types>label{flex:calc(50% - 6px);min-width:0}
+  .co-card-b{padding:16px}
+}
 .cols > *, .cards > *, .form-grid > *, .tiles > *{min-width:0}
 </style>
 </head>
@@ -385,54 +484,100 @@ td .sub{color:var(--text2);font-size:12px;line-height:16px}
 
       <!-- CREATE -->
       <section class="view" id="v-create">
-        <div class="page-head"><div><div class="display-sm">Create order</div><p>Book before <b id="cutTxt">17:00</b> and we deliver on <b id="delivTxt">the next working day</b>.</p></div></div>
-        <div class="cols">
-          <form class="col-main" id="shipForm" novalidate>
-            <div class="box">
-              <div class="sec-title"><span class="n">1</span><span class="h2">Customer details</span></div>
-              <div class="form-grid">
-                <div class="field"><label for="fName">Full name</label><input class="inp" id="fName" placeholder="Customer name"></div>
-                <div class="field"><label for="fPhone">Phone</label><input class="inp" id="fPhone" placeholder="01X XXXX XXXX" inputmode="tel"></div>
-                <div class="field full"><label for="fAddr">Address</label><input class="inp" id="fAddr" placeholder="Street, building, floor, apartment"></div>
-                <div class="field"><label for="fCity">City</label><select class="inp" id="fCity"></select></div>
-                <div class="field"><label for="fArea">Area</label><input class="inp" id="fArea" placeholder="District or landmark"></div>
-              </div>
-            </div>
-            <div class="box">
-              <div class="sec-title"><span class="n">2</span><span class="h2">Package</span></div>
-              <div class="form-grid">
-                <div class="field"><label for="fWeight">Weight (kg)</label><input class="inp" id="fWeight" type="number" min="0.1" step="0.1" value="1"></div>
-                <div class="field"><label for="fSize">Size</label><select class="inp" id="fSize"><option value="0">Small (up to 30 cm)</option><option value="1">Medium (up to 60 cm)</option><option value="2">Large (up to 100 cm)</option></select></div>
-                <div class="field"><label for="fDesc">Contents</label><input class="inp" id="fDesc" placeholder="e.g. 2 shirts"></div>
-                <div class="field"><label for="fRef">Order reference</label><input class="inp" id="fRef" placeholder="Your order number (optional)"></div>
-                <div class="field full"><label>Allow customer to open package</label>
-                  <div class="seg" id="openPkg" style="align-self:flex-start"><button type="button" class="on" data-v="1">Yes</button><button type="button" data-v="0">No</button></div></div>
-              </div>
-            </div>
-            <div class="box">
-              <div class="sec-title"><span class="n">3</span><span class="h2">Service and payment</span></div>
-              <div class="radios" id="svcRadios"></div>
-              <div class="form-grid">
-                <div class="field"><label for="fCod">Cash on delivery (EGP)</label><input class="inp" id="fCod" type="number" min="0" step="1" value="0"><span class="hint">Amount Shiply collects from the customer. Use 0 for prepaid.</span></div>
-                <div class="field"><label for="fNotes">Notes for courier</label><input class="inp" id="fNotes" placeholder="Call before arriving"></div>
-              </div>
-            </div>
-          </form>
-          <div class="col-side">
-            <div class="box quote">
-              <div class="h2">Order summary</div>
-              <div class="qrow"><span>Base (up to 1 kg)</span><b id="qBase"></b></div>
-              <div class="qrow"><span>Extra weight</span><b id="qW"></b></div>
-              <div class="qrow"><span>Size</span><b id="qS"></b></div>
-              <div class="qrow"><span>Service</span><b id="qSv"></b></div>
-              <div class="qrow"><span>COD fee (1%)</span><b id="qC"></b></div>
-              <div class="qtotal"><span class="h2">Shipping fees</span><span class="h2" id="qT"></span></div>
-              <div class="qrow"><span>You receive</span><b id="qNet"></b></div>
-              <button class="btn primary" form="shipForm" type="submit">Create order</button>
-              <button class="btn basic" type="button" id="clearForm">Clear</button>
-            </div>
+        <div class="co-head">
+          <div class="co-head-l"><button type="button" class="co-back" data-go="home" aria-label="Back"><i data-i="back"></i></button><div class="title">Create order</div></div>
+          <div class="co-actions">
+            <button type="button" class="btn basic" id="createAnother">Confirm and create another</button>
+            <button type="submit" class="btn primary" form="shipForm">Create order</button>
           </div>
         </div>
+        <form class="co-body" id="shipForm" novalidate>
+          <div class="co-types" id="coTypes">
+            <label class="co-type"><input type="radio" name="otype" value="deliver" checked><i data-i="box"></i>Deliver</label>
+            <label class="co-type"><input type="radio" name="otype" value="exchange"><i data-i="swap"></i>Exchange</label>
+            <label class="co-type"><input type="radio" name="otype" value="return"><i data-i="return"></i>Return</label>
+            <label class="co-type"><input type="radio" name="otype" value="cash"><i data-i="cash"></i>Cash collection</label>
+          </div>
+          <div class="co-form">
+            <div class="co-left">
+              <div class="co-card">
+                <div class="co-card-h"><div class="h2">Customer details</div></div>
+                <div class="co-card-b">
+                  <div class="co-row">
+                    <div class="fi"><label for="fPhone">Phone number</label><input class="inp" id="fPhone" placeholder="01X XXXX XXXX" inputmode="tel">
+                      <span class="rate" id="phoneRate" hidden></span>
+                      <button type="button" class="btn link sm" id="addPhone2"><i data-i="plus"></i>Add secondary phone number</button>
+                      <input class="inp" id="fPhone2" placeholder="Secondary phone" inputmode="tel" hidden></div>
+                    <div class="fi"><label for="fName">Full name</label><input class="inp" id="fName" placeholder="Customer name"></div>
+                  </div>
+                  <div class="fi"><label for="fAddr">Detailed address</label><input class="inp" id="fAddr" placeholder="Example: 12 Mosaddak St, 8th floor, next to the kiosk"></div>
+                  <div class="fi"><label for="fCity">Governorate and area</label>
+                    <div class="co-row tight"><select class="inp" id="fCity"></select><input class="inp" id="fArea" placeholder="Area, e.g. Nasr City"></div>
+                    <button type="button" class="btn link sm" id="addMore"><i data-i="plus"></i>Add additional details</button>
+                    <div class="co-row tight" id="moreAddr" hidden><input class="inp" id="fBuilding" placeholder="Building"><input class="inp" id="fFloor" placeholder="Floor"><input class="inp" id="fApt" placeholder="Apartment"></div>
+                  </div>
+                  <label class="chk"><input type="checkbox" id="fWork"><span class="cb"></span>Work address</label>
+                </div>
+              </div>
+
+              <div class="co-card" id="pkgCard">
+                <div class="co-card-h"><div class="h2">Package info</div></div>
+                <div class="co-card-b">
+                  <div class="fi"><label>Package size <button type="button" class="btn link sm" id="prohibited">Prohibited package</button></label>
+                    <div class="pills" id="sizePills"></div></div>
+                  <div class="co-row desc">
+                    <div class="fi"><label for="fDesc">Package description <span class="opt">Optional</span></label><input class="inp" id="fDesc" placeholder="T shirt, accessories, perfume, book, etc."></div>
+                    <div class="fi"><label for="fItems">Items count</label><input class="inp" id="fItems" type="number" min="1" step="1" value="1"></div>
+                  </div>
+                  <div class="fi"><label>Delivery speed</label><div class="pills" id="svcPills"></div></div>
+                  <div class="fi"><label>Product photo <span class="opt">Optional</span></label>
+                    <label class="upload" id="uploadBox"><input type="file" id="fPhoto" accept=".svg,.png,.jpg,.jpeg,.gif" hidden>
+                      <span class="up-ic"><i data-i="upload"></i></span>
+                      <span class="c2"><b class="tl-teal">Click to upload</b> or drag and drop</span>
+                      <span class="caption c2">SVG, PNG, JPG, JPEG, GIF (max 10MB)</span>
+                      <img id="photoPrev" alt="" hidden></label></div>
+                  <div class="note"><span class="note-ic"><i data-i="info"></i></span><span>Adding a photo and description of the product helps us verify the shipment in return or exchange cases and reduces the possibility of package loss.</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="co-right">
+              <div class="co-card pay">
+                <div class="pay-b">
+                  <div class="opt-box">
+                    <div class="opt-item" id="codBlock">
+                      <div><div class="label-sm" id="codTitle">Collection amount</div><div class="caption c2" id="codSub">The amount to be collected from the customer upon delivery</div></div>
+                      <div class="affix"><span>EGP</span><input id="fCod" inputmode="decimal" placeholder="Leave it blank if paid online or by you"></div>
+                    </div>
+                    <div class="opt-item bt">
+                      <label class="chk al"><input type="checkbox" id="fDepOn"><span class="cb"></span><span><span class="label-sm">Request deposit amount from customer <span class="tag">New</span></span><span class="caption c2 db">The amount to be collected on account to ensure receipt</span></span></label>
+                      <div class="affix" id="depWrap" hidden><span>EGP</span><input id="fDep" inputmode="decimal" placeholder="0"></div>
+                    </div>
+                  </div>
+                  <div class="opt-box">
+                    <div class="opt-item"><label class="chk al"><input type="checkbox" id="fOpen"><span class="cb"></span><span><span class="label-sm">Allow the customer to open the package?</span><span class="caption c2 db">A fee of EGP 7 will be applied to the delivery</span></span></label></div>
+                  </div>
+                  <div class="fi"><label for="fVal">Item value</label>
+                    <div class="val-row"><div class="affix"><span>EGP</span><input id="fVal" inputmode="decimal" placeholder="0"></div>
+                    <label class="btn basic" style="margin:0">Upload proof<input type="file" id="fProof" accept=".jpg,.jpeg,.png,.pdf" hidden></label></div>
+                    <span class="caption c2" id="proofName"></span></div>
+                  <div class="upsell"><span class="up-ic2"><i data-i="shield"></i></span><span class="caption-md" id="insTxt">Subscribe to the insurance plan and get compensation up to EGP 25,000 in case of damage</span><button type="button" class="btn basic sm" id="insBtn">Subscribe</button></div>
+                </div>
+                <div class="pay-f">
+                  <button type="button" class="fees-h" id="feesToggle"><i data-i="chev"></i><span class="label-sm">Shiply estimated fees</span><span class="label-sm" id="qT">EGP 45</span></button>
+                  <div class="fees-list" id="feesList" hidden></div>
+                  <label class="chk"><input type="checkbox" id="fPayWallet"><span class="cb"></span><span class="caption">Pay with wallet balance</span></label>
+                </div>
+              </div>
+              <div class="co-card"><div class="co-card-b">
+                <div class="fi"><label for="fRetLoc">Return package location</label><select class="inp" id="fRetLoc"></select></div>
+                <div class="fi"><label for="fRef">Order reference <span class="opt">Optional</span></label><input class="inp" id="fRef" placeholder="Use a reference number for easier tracking"></div>
+                <div class="fi"><label for="fNotes">Delivery notes <span class="opt">Optional</span></label><input class="inp" id="fNotes" placeholder="Example: Please contact the customer before heading out"></div>
+                <div class="fi"><label for="fONotes">Order notes <span class="opt">Optional</span></label><textarea class="inp" id="fONotes" rows="3" placeholder="Leave an internal note for you or your team about the order"></textarea><span class="caption c2">This note is not printed on the airway bill</span></div>
+              </div></div>
+            </div>
+          </div>
+        </form>
       </section>
 
       <!-- PICKUPS -->
@@ -518,6 +663,10 @@ const P={
  x:'<path d="M18 6 6 18M6 6l12 12"/>',
  info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
  check:'<path d="M20 6 9 17l-5-5"/>',
+ back:'<path d="M19 12H5M12 19l-7-7 7-7"/>',
+ swap:'<path d="m17 1 4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/>',
+ upload:'<path d="M16 16l-4-4-4 4M12 12v9"/><path d="M20.4 18.4A5 5 0 0 0 18 9h-1.3A8 8 0 1 0 3 16.3"/>',
+ shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
  print:'<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>'
 };
 const ic=n=>`<svg class="i" viewBox="0 0 24 24">${P[n]||''}</svg>`;
@@ -533,13 +682,14 @@ const SERVICES={
   nextday12:{l:'Next day by 12 PM',d:'Morning delivery',x:15},
   saturday:{l:'Saturday',d:'Weekend delivery',x:25}
 };
-const SIZE_X=[0,10,25];
+const SIZES=['Small','Medium','Large','Light bulky','Heavy bulky'], SIZE_X=[0,10,25,60,120];
+const TYPES={deliver:{l:'Deliver',x:0},exchange:{l:'Exchange',x:15},return:{l:'Return',x:5},cash:{l:'Cash collection',x:0}};
 const fmt=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
 const egp=n=>'EGP '+fmt(n);
-function price({weight,size,service,cod}){
-  const base=45, w=Math.max(0,Math.ceil((+weight||1)-1))*5, s=SIZE_X[+size]||0, sv=SERVICES[service]?.x||0;
-  const c=Math.round((+cod||0))/100;
-  return {base,w,s,sv,c,total:Math.round((base+w+s+sv+c)*100)/100};
+function price({type='deliver',size=0,service='nextday',cod=0,open=0,insured=false,value=0}){
+  const base=45, t=TYPES[type]?.x||0, s=type==='cash'?0:(SIZE_X[+size]||0), sv=SERVICES[service]?.x||0;
+  const c=Math.round((+cod||0))/100, o=open?7:0, ins=insured?Math.round((+value||0))/100:0;
+  return {base,t,s,sv,c,o,ins,total:Math.round((base+t+s+sv+c+o+ins)*100)/100};
 }
 const load=k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
@@ -562,7 +712,7 @@ function seed(){
     steps.forEach((x,k)=>history.push({s:x,t:Math.min(now,created+(k+1)*H*1.2)}));
     if(s==='delivered'&&i%2===0)history.at(-1).t=now-i*6e5;
     return {id:trk(),name:n,phone:'010'+String(20000000+i*4731923).slice(0,8),addr:`${10+i} Street ${i+3}`,city:CITIES[i%CITIES.length],area:'',
-      weight,size,service,cod,desc:'Clothing',ref:'ORD'+(1040+i),notes:'',open:1,fees:price({weight,size,service,cod}).total,status:s,created,history};
+      weight,size,service,cod,desc:'Clothing',ref:'ORD'+(1040+i),notes:'',open:1,items:1+(i%3),type:'deliver',fees:price({size,service,cod}).total,status:s,created,history};
   });
   pickups=[{id:'PU5021',date:now+864e5,count:3,status:'Scheduled'},{id:'PU5018',date:now-864e5,count:7,status:'Completed'},{id:'PU5011',date:now-3*864e5,count:5,status:'Completed'}];
   persist();
@@ -670,7 +820,7 @@ function openDrawer(id){
   const next=idx>-1&&idx<3?FLOW.slice(idx+1).map(f=>`<li><span class="dotc"></span><div><div class="label-sm" style="color:var(--text2)">${STATUS[f]}</div><div class="caption c2">Upcoming</div></div></li>`).join(''):'';
   $('#dBody').innerHTML=`
     <div><div class="h2" style="margin-bottom:12px">Customer</div><dl class="kv"><dt>Name</dt><dd>${esc(s.name)}</dd><dt>Phone</dt><dd>${esc(s.phone)}</dd><dt>Address</dt><dd>${esc(s.addr)}${s.area?', '+esc(s.area):''}, ${esc(s.city)}</dd></dl></div>
-    <div><div class="h2" style="margin-bottom:12px">Order</div><dl class="kv"><dt>Service</dt><dd>${SERVICES[s.service].l}</dd><dt>Weight</dt><dd>${s.weight} kg</dd><dt>Contents</dt><dd>${esc(s.desc)||'Not set'}</dd><dt>Reference</dt><dd>${esc(s.ref)||'Not set'}</dd><dt>Open package</dt><dd>${s.open?'Allowed':'Not allowed'}</dd><dt>COD</dt><dd>${s.cod?egp(s.cod):'Prepaid'}</dd><dt>Shipping fees</dt><dd>${egp(s.fees)}</dd>${s.notes?`<dt>Notes</dt><dd>${esc(s.notes)}</dd>`:''}</dl></div>
+    <div><div class="h2" style="margin-bottom:12px">Order</div><dl class="kv"><dt>Service</dt><dd>${SERVICES[s.service].l}</dd><dt>Type</dt><dd>${TYPES[s.type||'deliver'].l}</dd><dt>Package</dt><dd>${SIZES[s.size]||'Small'}, ${s.items||1} item(s)</dd>${s.deposit?`<dt>Deposit</dt><dd>${egp(s.deposit)}</dd>`:''}${s.insured?`<dt>Insurance</dt><dd>Covered (${egp(s.value)})</dd>`:''}${s.onotes?`<dt>Order notes</dt><dd>${esc(s.onotes)}</dd>`:''}<dt>Contents</dt><dd>${esc(s.desc)||'Not set'}</dd><dt>Reference</dt><dd>${esc(s.ref)||'Not set'}</dd><dt>Open package</dt><dd>${s.open?'Allowed':'Not allowed'}</dd><dt>COD</dt><dd>${s.cod?egp(s.cod):'Prepaid'}</dd><dt>Shipping fees</dt><dd>${egp(s.fees)}</dd>${s.notes?`<dt>Notes</dt><dd>${esc(s.notes)}</dd>`:''}</dl></div>
     <div><div class="h2" style="margin-bottom:12px">Tracking</div><ul class="tl">${tl}${next}</ul></div>`;
   const b=[];
   if(idx>-1&&idx<3)b.push(`<button class="btn primary sm" onclick="advance()">Mark as ${STATUS[FLOW[idx+1]].toLowerCase()}</button>`);
@@ -695,35 +845,88 @@ function printLabel(){
   <div class="lbl-box"><div class="lbl-big">${esc(s.city).toUpperCase()}</div></div>
   <div class="lbl-box"><b>To:</b> ${esc(s.name)}<br>${esc(s.addr)}${s.area?', '+esc(s.area):''}<br>${esc(s.phone)}</div>
   <div class="lbl-box"><b>From:</b> ${esc(settings.store)}<br>${esc(settings.addr)}, ${esc(settings.city)}</div>
-  <div class="lbl-box"><b>COD:</b> ${s.cod?egp(s.cod):'PREPAID'} &nbsp; <b>Weight:</b> ${s.weight} kg &nbsp; <b>Open:</b> ${s.open?'Yes':'No'}</div>
+  <div class="lbl-box"><b>COD:</b> ${s.cod?egp(s.cod):'PREPAID'} &nbsp; <b>Size:</b> ${SIZES[s.size]||'Small'} &nbsp; <b>Items:</b> ${s.items||1} &nbsp; <b>Open:</b> ${s.open?'Yes':'No'}</div>
   <div class="barcode"></div><div style="text-align:center;font:700 16px monospace;letter-spacing:2px">${s.id}</div>`;
   window.print();
 }
 
 /* create */
 $('#fCity').innerHTML=$('#sCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join('');
-$('#svcRadios').innerHTML=Object.entries(SERVICES).map(([k,v],i)=>`<label class="radio"><input type="radio" name="svc" value="${k}" ${i?'':'checked'}><b>${v.l}</b><span>${v.d}</span><span class="pr">${v.x?'+ '+egp(v.x):'Included'}</span></label>`).join('');
-let openPkg=1;
-$('#openPkg').onclick=e=>{const b=e.target.closest('button');if(!b)return;openPkg=+b.dataset.v;$$('#openPkg button').forEach(x=>x.classList.toggle('on',x===b))};
-const formVals=()=>({name:$('#fName').value.trim(),phone:$('#fPhone').value.trim(),addr:$('#fAddr').value.trim(),city:$('#fCity').value,area:$('#fArea').value.trim(),
-  weight:+$('#fWeight').value||1,size:+$('#fSize').value,service:$('input[name=svc]:checked').value,cod:Math.max(0,+$('#fCod').value||0),
-  desc:$('#fDesc').value.trim(),ref:$('#fRef').value.trim(),notes:$('#fNotes').value.trim(),open:openPkg});
+$('#sizePills').innerHTML=SIZES.map((z,i)=>`<label class="pill"><input type="radio" name="size" value="${i}" ${i?'':'checked'}>${z}</label>`).join('');
+$('#svcPills').innerHTML=Object.entries(SERVICES).map(([k,v],i)=>`<label class="pill"><input type="radio" name="svc" value="${k}" ${i?'':'checked'}><span>${v.l}<br><small>${v.x?'+ '+egp(v.x):'Included'}</small></span></label>`).join('');
+function fillRetLoc(){$('#fRetLoc').innerHTML=`<option>Pickup location 01, ${esc(settings.city)} (${esc(settings.addr)})</option>`}
+const numOf=id=>Math.max(0,parseFloat(($('#'+id).value||'').replace(/,/g,''))||0);
+let insured=false;
+const otype=()=>$('input[name=otype]:checked').value;
+const formVals=()=>({type:otype(),name:$('#fName').value.trim(),phone:$('#fPhone').value.trim(),phone2:$('#fPhone2').value.trim(),
+  addr:[$('#fAddr').value.trim(),$('#fBuilding').value.trim()&&'Bldg '+$('#fBuilding').value.trim(),$('#fFloor').value.trim()&&'Floor '+$('#fFloor').value.trim(),$('#fApt').value.trim()&&'Apt '+$('#fApt').value.trim()].filter(Boolean).join(', '),
+  city:$('#fCity').value,area:$('#fArea').value.trim(),work:$('#fWork').checked,
+  size:+$('input[name=size]:checked').value,items:Math.max(1,+$('#fItems').value||1),service:$('input[name=svc]:checked').value,
+  cod:otype()==='return'?0:numOf('fCod'),deposit:$('#fDepOn').checked?numOf('fDep'):0,value:numOf('fVal'),insured,
+  open:$('#fOpen').checked?1:0,desc:$('#fDesc').value.trim(),ref:$('#fRef').value.trim(),notes:$('#fNotes').value.trim(),onotes:$('#fONotes').value.trim(),
+  payWallet:$('#fPayWallet').checked});
 function quote(){
   const v=formVals(),p=price(v);
-  $('#qBase').textContent=egp(p.base);$('#qW').textContent=egp(p.w);$('#qS').textContent=egp(p.s);$('#qSv').textContent=egp(p.sv);$('#qC').textContent=egp(p.c);
-  $('#qT').textContent=egp(p.total);$('#qNet').textContent=egp(Math.round((v.cod-p.total)*100)/100);
+  $('#qT').textContent=egp(p.total);
+  const rows=[['Base delivery',p.base],[TYPES[v.type].l+' order',p.t],['Package size ('+SIZES[v.size]+')',p.s],['Delivery speed',p.sv],['Cash collection fee (1%)',p.c],['Open package',p.o],['Insurance (1% of item value)',p.ins]].filter((r,i)=>i===0||r[1]);
+  $('#feesList').innerHTML=rows.map(([l,x])=>`<div><span>${l}</span><b>${egp(x)}</b></div>`).join('')+(v.cod?`<div><span>You receive</span><b>${egp(Math.round((v.cod-(v.payWallet?0:p.total))*100)/100)}</b></div>`:'');
 }
+function applyType(){
+  const t=otype();
+  $('#codBlock').hidden=t==='return';
+  $('#codTitle').textContent=t==='cash'?'Amount to collect':'Collection amount';
+  $('#codSub').textContent=t==='cash'?'Cash our courier collects from the customer for you':'The amount to be collected from the customer upon delivery';
+  $('#pkgCard').style.display=t==='cash'?'none':'';
+  quote();
+}
+function phoneRate(){
+  const ph=$('#fPhone').value.replace(/\D/g,''), el=$('#phoneRate');
+  const prev=ph.length>=8?ships.filter(s=>s.phone.replace(/\D/g,'')===ph):[];
+  if(!prev.length){el.hidden=true;return}
+  const ok=prev.filter(s=>s.status==='delivered').length, bad=prev.filter(s=>['failed','returning'].includes(s.status)).length;
+  const [cls,msg]=bad>ok?['amber','This customer has a low delivery success rate']:ok?['green','This customer has a high delivery success rate']:['gray','This customer has orders in progress with you'];
+  el.className='rate '+cls;el.innerHTML=`<span class="rd">${ic(cls==='amber'?'alert':'check')}</span><span title="${ok} delivered, ${bad} failed or returned out of ${prev.length}">${msg}</span>`;el.hidden=false;
+  if(!$('#fName').value){const last=prev[0];['#fName','#fAddr'].forEach(x=>$(x).classList.remove('err'));$('#fName').value=last.name;$('#fAddr').value=last.addr;$('#fCity').value=last.city;$('#fArea').value=last.area||''}
+}
+$('#fPhone').addEventListener('input',phoneRate);
+$('#shipForm').addEventListener('input',e=>{(e.target.closest('.affix')||e.target).classList.remove('err')});
+$('#coTypes').addEventListener('change',applyType);
 $('#shipForm').addEventListener('input',quote);$('#shipForm').addEventListener('change',quote);
-$('#shipForm').onsubmit=e=>{
-  e.preventDefault();
+$('#addPhone2').onclick=()=>{$('#fPhone2').hidden=false;$('#addPhone2').hidden=true;$('#fPhone2').focus()};
+$('#addMore').onclick=()=>{$('#moreAddr').hidden=false;$('#addMore').hidden=true;$('#fBuilding').focus()};
+$('#fDepOn').onchange=()=>{$('#depWrap').hidden=!$('#fDepOn').checked;if($('#fDepOn').checked)$('#fDep').focus()};
+$('#prohibited').onclick=()=>toast('Not allowed: cash, gold, weapons, drugs, flammables, live animals');
+$('#feesToggle').onclick=()=>{const o=$('#feesList').hidden;$('#feesList').hidden=!o;$('#feesToggle').classList.toggle('open',o)};
+const INS_OFF='Subscribe to the insurance plan and get compensation up to EGP 25,000 in case of damage';
+$('#insBtn').onclick=()=>{insured=!insured;$('.upsell').classList.toggle('on',insured);$('#insBtn').textContent=insured?'Remove':'Subscribe';
+  $('#insTxt').textContent=insured?'Insurance added. You are covered up to EGP 25,000 for this order.':INS_OFF;quote()};
+$('#fProof').onchange=e=>{$('#proofName').textContent=e.target.files[0]?'Attached: '+e.target.files[0].name:''};
+function setPhoto(f){if(!f)return;if(f.size>10e6){toast('Photo is larger than 10MB');return}
+  const r=new FileReader();r.onload=()=>{$('#photoPrev').src=r.result;$('#photoPrev').hidden=false};r.readAsDataURL(f)}
+$('#fPhoto').onchange=e=>setPhoto(e.target.files[0]);
+const ub=$('#uploadBox');
+['dragenter','dragover'].forEach(ev=>ub.addEventListener(ev,e=>{e.preventDefault();ub.classList.add('drag')}));
+['dragleave','drop'].forEach(ev=>ub.addEventListener(ev,e=>{e.preventDefault();ub.classList.remove('drag')}));
+ub.addEventListener('drop',e=>setPhoto(e.dataTransfer.files[0]));
+function resetForm(){
+  $('#shipForm').reset();insured=false;$('.upsell').classList.remove('on');$('#insBtn').textContent='Subscribe';$('#insTxt').textContent=INS_OFF;
+  ['#fPhone2','#moreAddr','#depWrap','#photoPrev','#phoneRate'].forEach(x=>$(x).hidden=true);$('#addPhone2').hidden=$('#addMore').hidden=false;
+  $('#proofName').textContent='';$$('#shipForm .err').forEach(x=>x.classList.remove('err'));fillRetLoc();applyType();
+}
+function submitOrder(another){
   const v=formVals();let bad=null;
-  [['fName',!!v.name],['fPhone',/^[0-9+ ]{8,}$/.test(v.phone)],['fAddr',!!v.addr]].forEach(([id,ok])=>{const el=$('#'+id);el.style.borderColor=ok?'':'var(--danger)';if(!ok&&!bad)bad=el});
-  if(bad){bad.focus();toast('Please fill in the highlighted fields');return}
+  const need=[['fPhone',/^[0-9+ ]{8,}$/.test(v.phone)],['fName',!!v.name],['fAddr',!!$('#fAddr').value.trim()]];
+  if(v.deposit&&v.cod&&v.deposit>v.cod)need.push(['fDep',false]);
+  $$('#shipForm .err').forEach(x=>x.classList.remove('err'));
+  need.forEach(([id,ok])=>{const el=$('#'+id);if(!ok){(el.closest('.affix')||el).classList.add('err');if(!bad)bad=el}});
+  if(bad){bad.focus();toast(bad.id==='fDep'?'Deposit cannot be more than the collection amount':'Please fill in the highlighted fields');return}
   const now=Date.now(),s={...v,id:trk(),fees:price(v).total,status:'pending',created:now,history:[{s:'pending',t:now}]};
-  ships.unshift(s);persist();$('#shipForm').reset();openPkg=1;$$('#openPkg button').forEach((x,i)=>x.classList.toggle('on',!i));quote();
-  go('orders');openDrawer(s.id);toast('Order '+s.id+' created');
-};
-$('#clearForm').onclick=()=>{$('#shipForm').reset();quote()};
+  ships.unshift(s);persist();resetForm();
+  if(another){render();window.scrollTo(0,0);$('#fPhone').focus();toast('Order '+s.id+' created. Ready for the next one')}
+  else{go('orders');openDrawer(s.id);toast('Order '+s.id+' created')}
+}
+$('#shipForm').onsubmit=e=>{e.preventDefault();submitOrder(false)};
+$('#createAnother').onclick=()=>submitOrder(true);
 
 /* pickups */
 function requestPickup(){
@@ -752,8 +955,8 @@ function renderWallet(){
 
 /* csv */
 function exportCsv(){
-  const rows=[['Tracking','Reference','Customer','Phone','Address','City','Service','Weight','COD','Fees','Status','Created']]
-    .concat(ships.map(s=>[s.id,s.ref,s.name,s.phone,s.addr,s.city,SERVICES[s.service].l,s.weight,s.cod,s.fees,STATUS[s.status],new Date(s.created).toISOString()]));
+  const rows=[['Tracking','Reference','Customer','Phone','Address','City','Service','Type','Size','Items','COD','Fees','Status','Created']]
+    .concat(ships.map(s=>[s.id,s.ref,s.name,s.phone,s.addr,s.city,SERVICES[s.service].l,TYPES[s.type||'deliver'].l,SIZES[s.size]||'Small',s.items||1,s.cod,s.fees,STATUS[s.status],new Date(s.created).toISOString()]));
   const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='shiply-orders.csv';a.click();toast('CSV exported');
 }
@@ -772,18 +975,17 @@ function tick(){
   $('#countdown').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');
   const deliver=passed?nextWorkingDay(nextWorkingDay(now)):nextWorkingDay(now);
   $('#cutMsg').textContent=passed?`Today's cutoff passed. New orders deliver ${dayName(deliver)}.`:`Left to book for delivery ${dayName(deliver)}.`;
-  $('#delivTxt').textContent=dayName(nextWorkingDay(now));
 }
 
 /* render */
 function render(){
   const ini=(settings.store||'S').trim().charAt(0).toUpperCase()||'S';
   $('#storeName').textContent=settings.store;$('#avTop').textContent=$('#avBig').textContent=ini;
-  $('#sideCut').textContent=$('#cutTxt').textContent=settings.cutoff;
+  $('#sideCut').textContent=settings.cutoff;fillRetLoc();
   $('#navCount').textContent=ships.filter(s=>['pending','failed'].includes(s.status)).length;
   renderHome();renderOrders();renderPickups();renderWallet();fillSettings();
 }
-render();quote();tick();setInterval(tick,1000);
+render();applyType();tick();setInterval(tick,1000);
 </script>
 </body>
 </html>
