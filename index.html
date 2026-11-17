@@ -1,705 +1,789 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shiply Merchant Panel</title>
+<title>Shiply Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #f4f6fb;
-    --panel: #ffffff;
-    --text: #1b2333;
-    --muted: #6b7489;
-    --border: #e3e7ef;
-    --brand: #2563eb;
-    --brand-soft: #e8efff;
-    --ok: #16a34a;
-    --ok-soft: #e6f6ec;
-    --warn: #d97706;
-    --warn-soft: #fdf3e2;
-    --bad: #dc2626;
-    --bad-soft: #fdeaea;
-    --info: #7c3aed;
-    --info-soft: #f1eafe;
-    --radius: 12px;
-    --shadow: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #0f1420; --panel: #171e2d; --text: #e7ebf3; --muted: #95a0b8;
-      --border: #263044; --brand: #5b8cff; --brand-soft: #1d2a4a;
-      --ok-soft: #12301f; --warn-soft: #33260f; --bad-soft: #3a1717; --info-soft: #2a1d47;
-      --shadow: none;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0; background: var(--bg); color: var(--text);
-    font: 14px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  }
-  button, input, select, textarea { font: inherit; color: inherit; }
+:root{
+  --text:#111619; --text2:#667085; --muted:#98a2b3;
+  --border:#e4e7ec; --input:#d0d5dd; --hover:#f9fafb; --bg:#fff;
+  --teal:#0098a5; --teal-h:#137a84; --teal-ring:#d9f4f8; --teal-bg:#ecfafc; --teal-dk:#0b5d66;
+  --danger:#b42318; --danger-h:#f04438; --danger-a:#7a271a; --danger-bg:#fef3f2;
+  --warn:#dc6803; --red:#e30613; --green-bg:#ecfdf3;
+  --shadow:0 1px 2px #1d29391a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font:400 14px/22px Lato,sans-serif;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--teal);text-decoration:none}a:hover{color:var(--teal-dk)}
+svg.i{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.67;stroke-linecap:round;stroke-linejoin:round}
 
-  /* Layout */
-  .app { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
-  aside {
-    background: var(--panel); border-right: 1px solid var(--border);
-    padding: 20px 14px; display: flex; flex-direction: column; gap: 4px;
-    position: sticky; top: 0; height: 100vh;
-  }
-  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; padding: 4px 10px 18px; }
-  .logo-mark { width: 32px; height: 32px; border-radius: 9px; background: var(--brand); color: #fff; display: grid; place-items: center; font-size: 16px; }
-  .nav-btn {
-    display: flex; align-items: center; gap: 10px; width: 100%;
-    padding: 9px 12px; border: 0; border-radius: 8px; background: none;
-    text-align: left; cursor: pointer; color: var(--muted); font-weight: 500;
-  }
-  .nav-btn:hover { background: var(--bg); color: var(--text); }
-  .nav-btn.active { background: var(--brand-soft); color: var(--brand); }
-  .nav-btn svg { width: 18px; height: 18px; flex: none; }
-  .aside-foot { margin-top: auto; padding: 12px; border-radius: 10px; background: var(--bg); font-size: 13px; color: var(--muted); }
-  .aside-foot strong { color: var(--text); display: block; }
+.display-sm{font:600 24px/32px Poppins,sans-serif}
+.title{font:600 20px/30px Poppins,sans-serif}
+.h1{font:600 18px/28px Lato,sans-serif}
+.h2{font:600 16px/24px Lato,sans-serif}
+.label-sm{font:600 14px/20px Lato,sans-serif}
+.caption{font:400 12px/16px Lato,sans-serif}
+.subheading{font:600 12px/16px Lato,sans-serif;text-transform:uppercase;letter-spacing:.04em}
+.c2{color:var(--text2)}
 
-  main { padding: 24px 28px 48px; min-width: 0; }
-  header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; flex-wrap: wrap; }
-  h1 { font-size: 22px; margin: 0; }
-  .sub { color: var(--muted); margin: 2px 0 0; }
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:8px;border:1px solid transparent;
+  font:600 16px/24px Lato,sans-serif;padding:10px 16px;cursor:pointer;background:none;white-space:nowrap;transition:background .15s,box-shadow .15s}
+.btn.sm{font-size:14px;line-height:20px;padding:8px 12px}
+.btn.sm svg.i{width:16px;height:16px}
+.btn.icon{padding:10px}.btn.sm.icon{padding:8px}
+.btn.primary{background:var(--teal);color:#fff;box-shadow:var(--shadow)}
+.btn.primary:hover{background:var(--teal-h)}
+.btn.primary:focus-visible,.btn.primary:active{box-shadow:0 0 0 4px var(--teal-ring)}
+.btn.basic{background:#fff;border-color:var(--input);color:var(--text);box-shadow:var(--shadow)}
+.btn.basic:hover{background:var(--hover)}
+.btn.basic:focus-visible{box-shadow:0 0 0 4px #f2f4f7}
+.btn.danger{background:var(--danger);color:#fff;box-shadow:var(--shadow)}
+.btn.danger:hover{background:var(--danger-h)}.btn.danger:active{background:var(--danger-a)}
+.btn.link{color:var(--teal);padding:0;border:0}.btn.link:hover{color:var(--teal-dk)}
+.btn.ghost{color:var(--text2)}.btn.ghost:hover{background:var(--hover)}
 
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px;
-    border-radius: 8px; border: 1px solid var(--border); background: var(--panel);
-    cursor: pointer; font-weight: 600;
-  }
-  .btn:hover { border-color: var(--muted); }
-  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
-  .btn.primary:hover { filter: brightness(1.08); }
-  .btn.small { padding: 5px 10px; font-size: 13px; font-weight: 500; }
+/* layout */
+.app{display:flex;min-height:100vh}
+.side{width:192px;flex:none;background:#fff;border-right:1px solid #0000001f;position:sticky;top:0;height:100vh;overflow-y:auto;display:flex;flex-direction:column;z-index:30}
+.logo{display:flex;align-items:center;gap:8px;padding:27px 0 24px 16px}
+.logo-mark{width:32px;height:32px;border-radius:8px;background:var(--teal);display:grid;place-items:center;color:#fff}
+.logo-mark svg{width:20px;height:20px}
+.logo b{font:600 20px/32px Poppins,sans-serif;letter-spacing:-.01em}
+.nav-sec{margin:24px 0 8px;padding:0 12px 0 20px;color:#98a2b3}
+.nav a{position:relative;display:block;height:44px;margin:0 12px 0 8px;cursor:pointer}
+.nav a + a{margin-top:2px}
+.nav a span.in{display:flex;align-items:center;gap:12px;height:44px;padding:10px 14px;border-radius:12px;color:var(--text);font:500 14px/20px Poppins,sans-serif}
+.nav a svg.i{stroke:#667085}
+.nav a:hover span.in{background:var(--hover)}
+.nav a.active span.in{background:var(--danger-bg);color:var(--danger)}
+.nav a.active svg.i{stroke:var(--danger)}
+.nav a.active::before{content:"";position:absolute;left:-8px;top:2px;width:4px;height:40px;background:var(--danger);border-radius:0 4px 4px 0}
+.nav .badge{margin-left:auto;font:600 12px/18px Lato;background:var(--danger-bg);color:var(--danger);border-radius:16px;padding:0 8px}
+.nav a.active .badge{background:#fff}
+.side-foot{margin-top:auto;padding:16px;border-top:1px solid var(--border)}
 
-  .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
-  .card-h { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; border-bottom: 1px solid var(--border); gap: 12px; flex-wrap: wrap; }
-  .card-h h2 { font-size: 15px; margin: 0; }
-  .card-b { padding: 18px; }
+.main{flex:1;min-width:0;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;background:#fff;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
+.top .l,.top .r{display:flex;align-items:center;gap:12px}
+.split{display:inline-flex;height:36px;border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.split button{background:var(--red);color:#fff;border:0;cursor:pointer;display:flex;align-items:center;gap:8px;font:600 14px/20px Lato}
+.split button:hover{background:#c00511}
+.split svg.i{width:16px;height:16px}
+.split .a{padding:0 14px}
+.split .b{padding:0 8px;border-left:1px solid #fff}
+.top .ib{width:32px;height:32px;padding:6px;border-radius:8px;border:0;background:none;color:var(--text2);cursor:pointer;display:grid;place-items:center;position:relative}
+.top .ib:hover{background:var(--hover)}
+.top .ib .dot{position:absolute;top:5px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--red);border:2px solid #fff}
+.vdiv{width:1px;height:24px;background:var(--border)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--teal-bg);border:1px solid var(--teal-ring);color:var(--teal);display:grid;place-items:center;font:600 14px/20px Lato;flex:none}
+.avatar.lg{width:48px;height:48px;font-size:18px}
+.burger{display:none!important}
+.dd{position:relative}
+.menu{position:absolute;top:42px;left:0;background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:0 12px 16px -4px #10182814,0 4px 6px -2px #10182808;min-width:220px;padding:4px;display:none;z-index:40}
+.menu.open{display:block}
+.menu button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:10px 12px;border-radius:6px;cursor:pointer;font:600 14px/20px Lato}
+.menu button:hover{background:var(--hover)}
+.menu svg.i{color:var(--text2)}
 
-  /* Stats */
-  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
-  .stat { padding: 16px 18px; }
-  .stat .label { color: var(--muted); font-size: 13px; }
-  .stat .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
-  .stat .hint { font-size: 12px; color: var(--muted); }
+.page{padding:24px;display:flex;flex-direction:column;gap:16px}
+.view{display:none}.view.active{display:flex;flex-direction:column;gap:24px}
+.hello{display:flex;align-items:center;gap:12px}
+.updated{display:flex;align-items:center;gap:6px;color:var(--text2);font:400 12px/16px Lato}
+.updated button{border:0;background:none;color:var(--text2);cursor:pointer;display:grid}
+.updated svg.i{width:14px;height:14px}
+.cols{display:flex;gap:32px;align-items:flex-start}
+.col-main{flex:3;min-width:0;display:flex;flex-direction:column;gap:24px}
+.col-side{flex:1;min-width:260px;display:flex;flex-direction:column;gap:16px}
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.page-head p{color:var(--text2)}
 
-  .cutoff {
-    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
-    padding: 16px 20px; margin-bottom: 18px; border-radius: var(--radius);
-    background: linear-gradient(120deg, var(--brand), #4f46e5); color: #fff;
-  }
-  .cutoff .big { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; }
-  .cutoff .btn { background: #fff; color: #1e3a8a; border-color: #fff; }
+/* summary */
+.sum-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.sum-head .h2{display:flex;align-items:center;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--input);border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.seg button{border:0;background:#fff;padding:9px 16px;font:600 14px/20px Lato;color:var(--text);cursor:pointer}
+.seg button + button{border-left:1px solid var(--input)}
+.seg button:hover{background:var(--hover)}
+.seg button.on{background:var(--teal-bg);color:var(--teal);padding:9px 12px 9px 16px}
+.cards{display:flex;flex-wrap:wrap;gap:16px}
+.card{width:calc(25% - 12px);padding:16px;border:1px solid var(--border);border-radius:12px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.card.click{cursor:pointer;transition:background .15s}.card.click:hover{background:var(--hover)}
+.card .t{display:flex;align-items:center;gap:4px;color:var(--text2);font:600 14px/20px Lato}
+.card .t svg.i{width:14px;height:14px;stroke:#98a2b3}
+.card .v{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.card .v .warn{color:var(--warn)}
+.card .v .of{font:600 18px/28px Lato;color:var(--text2)}
+.card .v .cur{color:var(--text2)}
+.tag{display:inline-flex;align-items:center;height:20px;padding:2px 8px;border-radius:16px;font:600 12px/16px Lato;background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-ring);white-space:nowrap;align-self:center}
+.bar{height:6px;background:#f2f4f7;border-radius:4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);border-radius:4px}
 
-  .grid2 { display: grid; grid-template-columns: 2fr 1fr; gap: 18px; }
-  .grid2 > *, .stats > * { min-width: 0; }
+.box{border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:20px;background:#fff}
+.box-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tile{background:var(--hover);border-radius:12px;padding:24px 16px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;cursor:pointer;border:1px solid transparent;transition:border-color .15s}
+.tile:hover{border-color:var(--teal-ring)}
+.tile .ic{width:48px;height:48px;border-radius:50%;background:#fff;border:1px solid var(--border);display:grid;place-items:center;color:var(--teal)}
+.tile .ic svg.i{width:24px;height:24px}
+.tile p{color:var(--text2);font-size:12px;line-height:16px}
 
-  /* Table */
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { padding: 11px 18px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap; }
-  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
-  tbody tr:hover { background: var(--bg); }
-  tbody tr:last-child td { border-bottom: 0; }
-  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
-  .empty { padding: 36px; text-align: center; color: var(--muted); }
+.banner{border-radius:16px;padding:20px 18px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;border:1px solid}
+.banner.yellow{background:#fffaeb;border-color:#fedf89}
+.banner.red{background:#fef3f2;border-color:#fecdca}
+.banner.teal{background:var(--teal-bg);border-color:var(--teal-ring)}
+.banner .lbl{display:flex;align-items:center;gap:6px;font:600 12px/16px Lato;text-transform:uppercase;letter-spacing:.04em}
+.banner.yellow .lbl{color:var(--warn)}.banner.red .lbl{color:var(--red)}.banner.teal .lbl{color:var(--teal)}
+.banner .lbl svg.i{width:16px;height:16px}
+.banner p{color:var(--text2)}
+.banner .btn{align-self:flex-start;position:relative;z-index:1}
+.banner .bg-ic{position:absolute;right:-6px;bottom:-6px;opacity:.4}
+.banner .bg-ic svg.i{width:72px;height:72px;stroke-width:1}
+.banner.yellow .bg-ic{color:var(--warn)}.banner.red .bg-ic{color:var(--red)}.banner.teal .bg-ic{color:var(--teal)}
+.count{font:600 24px/32px Poppins;letter-spacing:.02em}
 
-  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
-  .s-pending   { background: var(--warn-soft); color: var(--warn); }
-  .s-collected { background: var(--info-soft); color: var(--info); }
-  .s-transit   { background: var(--brand-soft); color: var(--brand); }
-  .s-delivered { background: var(--ok-soft); color: var(--ok); }
-  .s-failed    { background: var(--bad-soft); color: var(--bad); }
+/* tables */
+.tbl-wrap{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.tbl-tools{display:flex;gap:12px;padding:16px;border-bottom:1px solid var(--border);flex-wrap:wrap;align-items:center}
+.tbl-tools .grow{flex:1;min-width:180px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{background:var(--hover);color:var(--text2);font:600 12px/18px Lato;text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:14px 16px;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.rowc{cursor:pointer}tbody tr.rowc:hover{background:var(--hover)}
+td .sub{color:var(--text2);font-size:12px;line-height:16px}
+.empty{padding:40px 16px;text-align:center;color:var(--text2)}
+.st{display:inline-flex;align-items:center;gap:6px;height:22px;padding:2px 8px;border-radius:16px;font:600 12px/18px Lato}
+.st::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.st.pending{background:#f2f4f7;color:#344054}
+.st.collected{background:#eff8ff;color:#175cd3}
+.st.transit{background:var(--teal-bg);color:var(--teal)}
+.st.delivered{background:var(--green-bg);color:#027a48}
+.st.failed{background:#fffaeb;color:#b54708}
+.st.returning{background:var(--danger-bg);color:var(--danger)}
+.st.cancelled{background:#f2f4f7;color:#98a2b3}
+.pager{padding:12px 16px;border-top:1px solid var(--border);color:var(--text2)}
 
-  .filters { display: flex; gap: 8px; flex-wrap: wrap; }
-  .input, select.input, textarea.input {
-    padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px;
-    background: var(--panel); outline: none; width: 100%;
-  }
-  .input:focus { border-color: var(--brand); box-shadow: 0 0 0 3px var(--brand-soft); }
-  .filters .input { width: auto; min-width: 160px; }
+/* forms */
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 20px}
+.form-grid .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label{font:600 14px/20px Lato;color:#344054}
+.field .hint{font:400 12px/16px Lato;color:var(--text2)}
+.inp{height:40px;width:100%;padding:8px 12px;border:1px solid var(--input);border-radius:8px;background:#fff;box-shadow:var(--shadow);outline:0;transition:border-color .15s,box-shadow .15s}
+.inp:focus{border-color:var(--teal);box-shadow:var(--shadow),0 0 0 4px var(--teal-ring)}
+.inp::placeholder{color:#98a2b3}
+.search{position:relative}.search svg.i{position:absolute;left:12px;top:10px;color:#98a2b3}.search .inp{padding-left:40px}
+.radios{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.radio{border:1px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;display:flex;flex-direction:column;gap:4px;position:relative}
+.radio input{position:absolute;opacity:0}
+.radio:has(input:checked){border-color:var(--teal);background:var(--teal-bg);box-shadow:0 0 0 1px var(--teal)}
+.radio b{font:600 14px/20px Lato}.radio span{color:var(--text2);font-size:12px;line-height:16px}
+.radio .pr{color:var(--teal);font:600 14px/20px Lato;margin-top:4px}
+.sec-title{display:flex;align-items:center;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.sec-title .n{width:28px;height:28px;border-radius:50%;background:var(--teal-bg);color:var(--teal);display:grid;place-items:center;font:600 14px/20px Lato}
+.quote{display:flex;flex-direction:column;gap:12px}
+.qrow{display:flex;justify-content:space-between;color:var(--text2)}
+.qrow b{color:var(--text);font-weight:600}
+.qtotal{display:flex;justify-content:space-between;padding-top:12px;border-top:1px solid var(--border)}
 
-  /* Form */
-  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; }
-  .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
-  .field.full { grid-column: 1 / -1; }
-  .section-title { grid-column: 1 / -1; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin-top: 8px; }
-  .quote { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-top: 1px solid var(--border); gap: 12px; flex-wrap: wrap; }
-  .quote .price { font-size: 22px; font-weight: 700; }
+/* drawer + toast */
+.scrim{position:fixed;inset:0;background:#34405466;opacity:0;pointer-events:none;transition:opacity .2s;z-index:50}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:440px;max-width:100%;background:#fff;box-shadow:-20px 0 24px -4px #10182814;transform:translateX(100%);transition:transform .25s;z-index:60;display:flex;flex-direction:column;visibility:hidden}
+.drawer.open{transform:none;visibility:visible}
+.drawer header{padding:20px 24px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.drawer .body{padding:24px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:24px}
+.drawer footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap}
+.kv{display:grid;grid-template-columns:130px 1fr;gap:10px 12px}
+.kv dt{color:var(--text2)}.kv dd{font-weight:600;min-width:0;overflow-wrap:anywhere}
+.tl li{list-style:none;display:flex;gap:12px;position:relative;padding-bottom:16px}
+.tl li::before{content:"";position:absolute;left:11px;top:24px;bottom:0;width:2px;background:var(--border)}
+.tl li:last-child::before{display:none}
+.tl .dotc{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);background:#fff;flex:none;display:grid;place-items:center}
+.tl li.done .dotc{background:var(--teal);border-color:var(--teal);color:#fff}
+.tl li.done .dotc svg.i{width:14px;height:14px;stroke-width:3}
+.tl li.cur .dotc{border-color:var(--teal);box-shadow:0 0 0 4px var(--teal-ring)}
+.toast{visibility:hidden;position:fixed;left:50%;bottom:24px;transform:translate(-50%,120px);background:var(--text);color:#fff;padding:12px 16px;border-radius:8px;font:600 14px/20px Lato;z-index:80;transition:transform .25s;display:flex;gap:8px;align-items:center;max-width:calc(100% - 32px)}
+.toast.show{transform:translate(-50%,0);visibility:visible}
+.help{position:fixed;right:20px;bottom:20px;z-index:25;border-radius:50%!important}
 
-  .list-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 10px; }
-  .list-row:last-child { border-bottom: 0; }
+#printArea{display:none}
+@media print{
+  body *{visibility:hidden}
+  #printArea,#printArea *{visibility:visible}
+  #printArea{display:block;position:absolute;left:0;top:0;width:100mm;padding:6mm;font:12px/1.4 Lato,sans-serif;border:2px solid #000}
+}
+.lbl-box{border-bottom:2px solid #000;padding:6px 0}
+.lbl-big{font:700 28px/1.1 Poppins,sans-serif}
+.barcode{height:56px;margin:8px 0;background:repeating-linear-gradient(90deg,#000 0 2px,#fff 2px 4px,#000 4px 5px,#fff 5px 8px,#000 8px 11px,#fff 11px 12px)}
 
-  .bar { height: 8px; background: var(--bg); border-radius: 99px; overflow: hidden; }
-  .bar span { display: block; height: 100%; background: var(--ok); border-radius: 99px; }
-
-  /* Drawer */
-  .overlay { position: fixed; inset: 0; background: rgba(10,15,25,.45); display: none; z-index: 20; }
-  .overlay.open { display: block; }
-  .drawer {
-    position: fixed; top: 0; right: 0; height: 100%; width: min(440px, 100%);
-    background: var(--panel); z-index: 21; transform: translateX(100%); transition: transform .2s ease;
-    display: flex; flex-direction: column; border-left: 1px solid var(--border);
-  }
-  .drawer.open { transform: none; }
-  .drawer .card-b { overflow-y: auto; flex: 1; }
-  .timeline { list-style: none; padding: 0; margin: 0; }
-  .timeline li { position: relative; padding: 0 0 18px 22px; }
-  .timeline li::before { content: ""; position: absolute; left: 4px; top: 6px; width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
-  .timeline li.done::before { background: var(--ok); }
-  .timeline li::after { content: ""; position: absolute; left: 8px; top: 18px; bottom: 0; width: 1px; background: var(--border); }
-  .timeline li:last-child::after { display: none; }
-  .kv { display: grid; grid-template-columns: 120px 1fr; gap: 6px 10px; margin-bottom: 18px; }
-  .kv dt { color: var(--muted); }
-  .kv dd { margin: 0; }
-
-  .toast {
-    position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
-    background: var(--text); color: var(--panel); padding: 10px 18px; border-radius: 8px;
-    opacity: 0; transition: .2s; z-index: 30; pointer-events: none;
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%); }
-
-  .view { display: none; }
-  .view.active { display: block; }
-
-  .menu-toggle { display: none; }
-
-  @media (max-width: 1000px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .grid2 { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 760px) {
-    .app { grid-template-columns: 1fr; }
-    aside { position: fixed; left: 0; z-index: 25; width: 240px; transform: translateX(-100%); transition: transform .2s; }
-    aside.open { transform: none; }
-    .menu-toggle { display: inline-flex; }
-    main { padding: 16px; }
-    .form-grid { grid-template-columns: 1fr; }
-    .filters .input { min-width: 0; flex: 1; }
-  }
+@media (max-width:992px){
+  .cols{flex-direction:column;align-items:stretch}
+  .col-side{min-width:0;width:100%}
+  .card{width:calc(50% - 8px)}
+}
+@media (max-width:768px){
+  body{font-size:15px;line-height:23px}
+  .display-sm,.count{font-size:25px;line-height:33px}.title{font-size:21px;line-height:31px}
+  .h1{font-size:19px;line-height:29px}.h2{font-size:17px;line-height:25px}
+  .side{position:fixed;left:0;top:0;transform:translateX(-100%);transition:transform .25s;box-shadow:0 20px 24px -4px #10182814}
+  .side.open{transform:none}
+  .burger{display:inline-flex!important}
+  .top{padding:12px 16px}
+  .top .hide-m{display:none}
+  .page{padding:16px}
+  .form-grid,.radios{grid-template-columns:minmax(0,1fr)}
+  .kv{grid-template-columns:110px 1fr}
+  .help{bottom:16px;right:16px}
+}
+.cols > *, .cards > *, .form-grid > *, .tiles > *{min-width:0}
 </style>
 </head>
 <body>
 <div class="app">
-  <aside id="sidebar">
-    <div class="logo"><div class="logo-mark">S</div>Shiply Merchant</div>
-    <button class="nav-btn active" data-view="dashboard">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
-      Dashboard
-    </button>
-    <button class="nav-btn" data-view="create">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
-      New shipment
-    </button>
-    <button class="nav-btn" data-view="shipments">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
-      Shipments
-    </button>
-    <button class="nav-btn" data-view="billing">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
-      Billing
-    </button>
-    <button class="nav-btn" data-view="settings">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
-      Settings
-    </button>
-    <div class="aside-foot">
-      <strong id="storeNameSide">My Store</strong>
-      Next Day plan
+  <aside class="side" id="side">
+    <div class="logo">
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg></div>
+      <b>Shiply</b>
     </div>
+    <nav class="nav">
+      <a data-view="home" class="active"><span class="in"><i data-i="home"></i>Home</span></a>
+      <a data-view="orders"><span class="in"><i data-i="box"></i>Orders<span class="badge" id="navCount">0</span></span></a>
+      <a data-view="create"><span class="in"><i data-i="plusSq"></i>Create order</span></a>
+      <a data-view="pickups"><span class="in"><i data-i="truck"></i>Pickups</span></a>
+      <a data-view="wallet"><span class="in"><i data-i="wallet"></i>Wallet</span></a>
+      <div class="nav-sec subheading">More</div>
+      <a data-view="settings"><span class="in"><i data-i="gear"></i>Settings</span></a>
+      <a id="navHelp"><span class="in"><i data-i="help"></i>Help center</span></a>
+    </nav>
+    <div class="side-foot caption c2">Next day delivery<br>Daily cutoff <b id="sideCut" style="color:var(--text)">17:00</b></div>
   </aside>
 
-  <main>
-    <!-- DASHBOARD -->
-    <section class="view active" id="view-dashboard">
-      <header class="top">
-        <div>
-          <button class="btn small menu-toggle" onclick="toggleMenu()">Menu</button>
-          <h1>Good day, <span id="storeNameHi">My Store</span></h1>
-          <p class="sub" id="todayLabel"></p>
-        </div>
-        <button class="btn primary" onclick="go('create')">+ New shipment</button>
-      </header>
-
-      <div class="cutoff">
-        <div>
-          <div>Book before <strong id="cutoffLabel">17:00</strong> for delivery <strong id="deliveryDay">tomorrow</strong></div>
-          <div class="big" id="countdown">00:00:00</div>
-        </div>
-        <button class="btn" onclick="go('create')">Book next day</button>
-      </div>
-
-      <div class="stats">
-        <div class="card stat"><div class="label">Booked today</div><div class="value" id="stToday">0</div><div class="hint">for next day delivery</div></div>
-        <div class="card stat"><div class="label">In transit</div><div class="value" id="stTransit">0</div><div class="hint">collected or on the way</div></div>
-        <div class="card stat"><div class="label">Delivered</div><div class="value" id="stDelivered">0</div><div class="hint" id="stRate">0% on time</div></div>
-        <div class="card stat"><div class="label">Spend this month</div><div class="value" id="stSpend">£0</div><div class="hint">excl. VAT</div></div>
-      </div>
-
-      <div class="grid2">
-        <div class="card">
-          <div class="card-h"><h2>Recent shipments</h2><button class="btn small" onclick="go('shipments')">View all</button></div>
-          <div class="table-wrap"><table><thead><tr><th>Tracking</th><th>Customer</th><th>City</th><th>Status</th><th>Price</th></tr></thead><tbody id="recentBody"></tbody></table></div>
-        </div>
-        <div class="card">
-          <div class="card-h"><h2>Needs attention</h2></div>
-          <div class="card-b" id="attention"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CREATE -->
-    <section class="view" id="view-create">
-      <header class="top">
-        <div>
-          <button class="btn small menu-toggle" onclick="toggleMenu()">Menu</button>
-          <h1>New next day shipment</h1>
-          <p class="sub">Booked before the cutoff, delivered the next working day.</p>
-        </div>
-      </header>
-      <form class="card" id="shipForm" autocomplete="off">
-        <div class="card-b form-grid">
-          <div class="section-title">Recipient</div>
-          <div class="field"><label for="fName">Full name</label><input class="input" id="fName" required></div>
-          <div class="field"><label for="fPhone">Phone</label><input class="input" id="fPhone" type="tel" required></div>
-          <div class="field full"><label for="fAddr">Address</label><input class="input" id="fAddr" required></div>
-          <div class="field"><label for="fCity">City</label><input class="input" id="fCity" required></div>
-          <div class="field"><label for="fPost">Postcode</label><input class="input" id="fPost" required></div>
-
-          <div class="section-title">Parcel</div>
-          <div class="field"><label for="fWeight">Weight (kg)</label><input class="input" id="fWeight" type="number" min="0.1" max="30" step="0.1" value="1" required></div>
-          <div class="field"><label for="fSize">Size</label>
-            <select class="input" id="fSize">
-              <option value="small">Small (up to 30×20×10 cm)</option>
-              <option value="medium" selected>Medium (up to 45×35×20 cm)</option>
-              <option value="large">Large (up to 60×50×40 cm)</option>
-            </select>
+  <div class="main">
+    <header class="top">
+      <div class="l">
+        <button class="btn basic sm icon burger" id="burger" aria-label="Menu"><i data-i="menu"></i></button>
+        <div class="dd">
+          <div class="split">
+            <button class="a" id="createBtn"><i data-i="plus"></i>Create</button>
+            <button class="b" id="createMore" aria-label="More create options"><i data-i="chev"></i></button>
           </div>
-          <div class="field"><label for="fService">Service</label>
-            <select class="input" id="fService">
-              <option value="nextday">Next Day</option>
-              <option value="nextday12">Next Day before 12:00</option>
-              <option value="saturday">Saturday delivery</option>
-            </select>
-          </div>
-          <div class="field"><label for="fValue">Declared value (£)</label><input class="input" id="fValue" type="number" min="0" step="1" value="50"></div>
-          <div class="field full"><label for="fRef">Order reference (optional)</label><input class="input" id="fRef" placeholder="e.g. #10234"></div>
-          <div class="field full"><label for="fNotes">Delivery notes (optional)</label><textarea class="input" id="fNotes" rows="2" placeholder="Leave with neighbour, gate code…"></textarea></div>
-        </div>
-        <div class="quote">
-          <div><div class="sub">Estimated price</div><div class="price" id="quotePrice">£0.00</div><div class="sub" id="quoteEta"></div></div>
-          <div style="display:flex;gap:8px">
-            <button type="reset" class="btn">Clear</button>
-            <button type="submit" class="btn primary">Book shipment</button>
+          <div class="menu" id="createMenu">
+            <button data-act="order"><i data-i="box"></i>New order</button>
+            <button data-act="pickup"><i data-i="truck"></i>Request pickup</button>
+            <button data-act="csv"><i data-i="download"></i>Export orders (CSV)</button>
           </div>
         </div>
-      </form>
-    </section>
+        <button class="btn basic sm hide-m" id="viewServices">View Services</button>
+      </div>
+      <div class="r">
+        <button class="ib" title="Notifications" id="bell"><i data-i="bell"></i><span class="dot"></span></button>
+        <button class="ib hide-m" title="Support" id="support"><i data-i="headset"></i></button>
+        <button class="ib hide-m" title="Settings" data-go="settings"><i data-i="gear"></i></button>
+        <span class="vdiv"></span>
+        <div class="avatar" id="avTop">S</div>
+      </div>
+    </header>
 
-    <!-- SHIPMENTS -->
-    <section class="view" id="view-shipments">
-      <header class="top">
-        <div>
-          <button class="btn small menu-toggle" onclick="toggleMenu()">Menu</button>
-          <h1>Shipments</h1>
-          <p class="sub" id="shipCount"></p>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn" onclick="exportCsv()">Export CSV</button>
-          <button class="btn primary" onclick="go('create')">+ New shipment</button>
-        </div>
-      </header>
-      <div class="card">
-        <div class="card-h">
-          <div class="filters">
-            <input class="input" id="search" placeholder="Search tracking, name, city…">
-            <select class="input" id="statusFilter">
-              <option value="">All statuses</option>
-              <option value="pending">Awaiting collection</option>
-              <option value="collected">Collected</option>
-              <option value="transit">Out for delivery</option>
-              <option value="delivered">Delivered</option>
-              <option value="failed">Delivery failed</option>
-            </select>
+    <main class="page">
+      <!-- HOME -->
+      <section class="view active" id="v-home">
+        <div class="hello">
+          <div class="avatar lg" id="avBig">S</div>
+          <div>
+            <div class="title">Hello, <span id="storeName">Store</span></div>
+            <div class="updated">Last updated at <span id="updAt"></span><button id="refresh" title="Refresh"><i data-i="refresh"></i></button></div>
           </div>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Tracking</th><th>Booked</th><th>Customer</th><th>City</th><th>Service</th><th>Status</th><th>Price</th><th></th></tr></thead>
-            <tbody id="shipBody"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+        <div class="cols">
+          <div class="col-main">
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div class="sum-head">
+                <div class="h2"><i data-i="cal"></i><span id="sumTitle">Today's summary</span></div>
+                <div class="seg" id="range">
+                  <button class="on" data-r="today">Today</button>
+                  <button data-r="week">This week</button>
+                  <button data-r="all">All time</button>
+                </div>
+              </div>
+              <div class="cards" id="cards"></div>
+            </div>
 
-    <!-- BILLING -->
-    <section class="view" id="view-billing">
-      <header class="top">
-        <div>
-          <button class="btn small menu-toggle" onclick="toggleMenu()">Menu</button>
-          <h1>Billing</h1>
-          <p class="sub">Invoices are issued on the 1st of each month.</p>
-        </div>
-      </header>
-      <div class="grid2">
-        <div class="card">
-          <div class="card-h"><h2>Invoices</h2></div>
-          <div class="table-wrap"><table><thead><tr><th>Month</th><th>Shipments</th><th>Amount</th><th>Status</th></tr></thead><tbody id="invoiceBody"></tbody></table></div>
-        </div>
-        <div class="card">
-          <div class="card-h"><h2>Current month</h2></div>
-          <div class="card-b">
-            <div class="list-row"><span>Shipments</span><strong id="bCount">0</strong></div>
-            <div class="list-row"><span>Subtotal</span><strong id="bSub">£0.00</strong></div>
-            <div class="list-row"><span>VAT (20%)</span><strong id="bVat">£0.00</strong></div>
-            <div class="list-row"><span>Total due</span><strong id="bTotal">£0.00</strong></div>
+            <div class="box">
+              <div class="box-head"><div class="h2">Recent orders</div><button class="btn link sm" data-go="orders">View all</button></div>
+              <div class="scroll" style="margin:-4px -16px -16px;border-top:1px solid var(--border)"><table><thead><tr><th>Tracking no.</th><th>Customer</th><th>City</th><th>Status</th><th>COD</th></tr></thead><tbody id="recent"></tbody></table></div>
+            </div>
+
+            <div class="box" id="services">
+              <div class="box-head"><div class="h2">Shiply services</div><button class="btn link sm" id="servAll">View all</button></div>
+              <div class="tiles">
+                <div class="tile" data-go="create"><div class="ic"><i data-i="bolt"></i></div><div class="label-sm">Next day delivery</div><p>Book before the cutoff, delivered next working day</p></div>
+                <div class="tile" data-go="pickups"><div class="ic"><i data-i="truck"></i></div><div class="label-sm">Pickups</div><p>A courier collects from your store</p></div>
+                <div class="tile" data-go="wallet"><div class="ic"><i data-i="cash"></i></div><div class="label-sm">Cash on delivery</div><p>We collect cash and pay you out weekly</p></div>
+                <div class="tile" data-go="orders" data-f="returning"><div class="ic"><i data-i="return"></i></div><div class="label-sm">Returns</div><p>Track orders heading back to you</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-side">
+            <div class="banner teal">
+              <div class="lbl"><i data-i="clock"></i>Next day cutoff</div>
+              <div>
+                <div class="count" id="countdown">00:00:00</div>
+                <p id="cutMsg"></p>
+              </div>
+              <button class="btn basic sm" data-go="create">Create order</button>
+              <div class="bg-ic"><i data-i="clock"></i></div>
+            </div>
+            <div class="banner yellow">
+              <div class="lbl"><i data-i="alert"></i>Action needed</div>
+              <div>
+                <div class="h2"><span id="actN">0</span> orders need your action</div>
+                <p>Failed delivery attempts waiting for you to rebook or return.</p>
+              </div>
+              <button class="btn basic sm" data-go="orders" data-f="failed">Review orders</button>
+              <div class="bg-ic"><i data-i="alert"></i></div>
+            </div>
+            <div class="banner red">
+              <div class="lbl"><i data-i="wallet"></i>Wallet</div>
+              <div>
+                <div class="h2">EGP <span id="walletBal">0</span> balance</div>
+                <p>Collected cash after Shiply fees. Next payout on <span id="payDay"></span>.</p>
+              </div>
+              <button class="btn basic sm" data-go="wallet">Open wallet</button>
+              <div class="bg-ic"><i data-i="cash"></i></div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SETTINGS -->
-    <section class="view" id="view-settings">
-      <header class="top">
-        <div>
-          <button class="btn small menu-toggle" onclick="toggleMenu()">Menu</button>
-          <h1>Settings</h1>
-          <p class="sub">Your collection address and store details.</p>
+      <!-- ORDERS -->
+      <section class="view" id="v-orders">
+        <div class="page-head">
+          <div><div class="display-sm">Orders</div><p>Track, rebook and print labels for every shipment.</p></div>
+          <div style="display:flex;gap:12px"><button class="btn basic sm" id="csvBtn"><i data-i="download"></i>Export</button><button class="btn primary sm" data-go="create"><i data-i="plus"></i>Create order</button></div>
         </div>
-      </header>
-      <form class="card" id="settingsForm">
-        <div class="card-b form-grid">
-          <div class="field"><label for="sName">Store name</label><input class="input" id="sName" required></div>
-          <div class="field"><label for="sEmail">Contact email</label><input class="input" id="sEmail" type="email"></div>
-          <div class="field full"><label for="sAddr">Collection address</label><input class="input" id="sAddr"></div>
-          <div class="field"><label for="sCutoff">Daily cutoff time</label><input class="input" id="sCutoff" type="time" required></div>
-          <div class="field"><label for="sPhone">Phone</label><input class="input" id="sPhone" type="tel"></div>
+        <div class="tbl-wrap">
+          <div class="tbl-tools">
+            <div class="search grow"><i data-i="search"></i><input class="inp" id="q" placeholder="Search by tracking no., name, phone or city"></div>
+            <select class="inp" id="fStatus" style="width:auto;min-width:170px"></select>
+          </div>
+          <div class="scroll"><table>
+            <thead><tr><th>Tracking no.</th><th>Customer</th><th>City</th><th>Service</th><th>Created</th><th>Status</th><th>COD</th><th>Fees</th></tr></thead>
+            <tbody id="ordersBody"></tbody>
+          </table></div>
+          <div class="pager caption" id="ordersInfo"></div>
         </div>
-        <div class="quote">
-          <button type="button" class="btn" onclick="resetDemo()">Reset demo data</button>
-          <button type="submit" class="btn primary">Save settings</button>
+      </section>
+
+      <!-- CREATE -->
+      <section class="view" id="v-create">
+        <div class="page-head"><div><div class="display-sm">Create order</div><p>Book before <b id="cutTxt">17:00</b> and we deliver on <b id="delivTxt">the next working day</b>.</p></div></div>
+        <div class="cols">
+          <form class="col-main" id="shipForm" novalidate>
+            <div class="box">
+              <div class="sec-title"><span class="n">1</span><span class="h2">Customer details</span></div>
+              <div class="form-grid">
+                <div class="field"><label for="fName">Full name</label><input class="inp" id="fName" placeholder="Customer name"></div>
+                <div class="field"><label for="fPhone">Phone</label><input class="inp" id="fPhone" placeholder="01X XXXX XXXX" inputmode="tel"></div>
+                <div class="field full"><label for="fAddr">Address</label><input class="inp" id="fAddr" placeholder="Street, building, floor, apartment"></div>
+                <div class="field"><label for="fCity">City</label><select class="inp" id="fCity"></select></div>
+                <div class="field"><label for="fArea">Area</label><input class="inp" id="fArea" placeholder="District or landmark"></div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="sec-title"><span class="n">2</span><span class="h2">Package</span></div>
+              <div class="form-grid">
+                <div class="field"><label for="fWeight">Weight (kg)</label><input class="inp" id="fWeight" type="number" min="0.1" step="0.1" value="1"></div>
+                <div class="field"><label for="fSize">Size</label><select class="inp" id="fSize"><option value="0">Small (up to 30 cm)</option><option value="1">Medium (up to 60 cm)</option><option value="2">Large (up to 100 cm)</option></select></div>
+                <div class="field"><label for="fDesc">Contents</label><input class="inp" id="fDesc" placeholder="e.g. 2 shirts"></div>
+                <div class="field"><label for="fRef">Order reference</label><input class="inp" id="fRef" placeholder="Your order number (optional)"></div>
+                <div class="field full"><label>Allow customer to open package</label>
+                  <div class="seg" id="openPkg" style="align-self:flex-start"><button type="button" class="on" data-v="1">Yes</button><button type="button" data-v="0">No</button></div></div>
+              </div>
+            </div>
+            <div class="box">
+              <div class="sec-title"><span class="n">3</span><span class="h2">Service and payment</span></div>
+              <div class="radios" id="svcRadios"></div>
+              <div class="form-grid">
+                <div class="field"><label for="fCod">Cash on delivery (EGP)</label><input class="inp" id="fCod" type="number" min="0" step="1" value="0"><span class="hint">Amount Shiply collects from the customer. Use 0 for prepaid.</span></div>
+                <div class="field"><label for="fNotes">Notes for courier</label><input class="inp" id="fNotes" placeholder="Call before arriving"></div>
+              </div>
+            </div>
+          </form>
+          <div class="col-side">
+            <div class="box quote">
+              <div class="h2">Order summary</div>
+              <div class="qrow"><span>Base (up to 1 kg)</span><b id="qBase"></b></div>
+              <div class="qrow"><span>Extra weight</span><b id="qW"></b></div>
+              <div class="qrow"><span>Size</span><b id="qS"></b></div>
+              <div class="qrow"><span>Service</span><b id="qSv"></b></div>
+              <div class="qrow"><span>COD fee (1%)</span><b id="qC"></b></div>
+              <div class="qtotal"><span class="h2">Shipping fees</span><span class="h2" id="qT"></span></div>
+              <div class="qrow"><span>You receive</span><b id="qNet"></b></div>
+              <button class="btn primary" form="shipForm" type="submit">Create order</button>
+              <button class="btn basic" type="button" id="clearForm">Clear</button>
+            </div>
+          </div>
         </div>
-      </form>
-    </section>
-  </main>
+      </section>
+
+      <!-- PICKUPS -->
+      <section class="view" id="v-pickups">
+        <div class="page-head">
+          <div><div class="display-sm">Pickups</div><p>Request a courier to collect your new orders.</p></div>
+          <button class="btn primary sm" id="reqPickup"><i data-i="plus"></i>Request pickup</button>
+        </div>
+        <div class="cards" id="pickCards"></div>
+        <div class="tbl-wrap"><div class="scroll"><table>
+          <thead><tr><th>Pickup ID</th><th>Date</th><th>Orders</th><th>Status</th></tr></thead>
+          <tbody id="pickBody"></tbody></table></div></div>
+      </section>
+
+      <!-- WALLET -->
+      <section class="view" id="v-wallet">
+        <div class="page-head"><div><div class="display-sm">Wallet</div><p>Cash collected for you, minus Shiply fees.</p></div></div>
+        <div class="cards" id="walletCards"></div>
+        <div class="tbl-wrap"><div class="scroll"><table>
+          <thead><tr><th>Tracking no.</th><th>Delivered</th><th>COD collected</th><th>Fees</th><th>Net</th></tr></thead>
+          <tbody id="walletBody"></tbody></table></div></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="view" id="v-settings">
+        <div class="page-head"><div><div class="display-sm">Settings</div><p>Your business profile and pickup preferences.</p></div></div>
+        <form class="box" id="setForm" style="max-width:760px">
+          <div class="form-grid">
+            <div class="field"><label for="sStore">Business name</label><input class="inp" id="sStore"></div>
+            <div class="field"><label for="sPhone">Contact phone</label><input class="inp" id="sPhone"></div>
+            <div class="field full"><label for="sAddr">Pickup address</label><input class="inp" id="sAddr"></div>
+            <div class="field"><label for="sCut">Daily cutoff time</label><input class="inp" id="sCut" type="time"><span class="hint">Orders booked before this time are delivered next working day.</span></div>
+            <div class="field"><label for="sCity">Pickup city</label><select class="inp" id="sCity"></select></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn primary sm" type="submit">Save changes</button>
+            <button class="btn danger sm" type="button" id="resetDemo">Reset demo data</button>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
 </div>
 
-<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer">
-  <div class="card-h"><h2 id="dTitle">Shipment</h2><button class="btn small" onclick="closeDrawer()">Close</button></div>
-  <div class="card-b" id="dBody"></div>
-</div>
+<button class="btn primary icon help" id="helpBtn" title="Help"><i data-i="help"></i></button>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <header>
+    <div><div class="caption c2">Order</div><div class="h1" id="dTitle"></div><div id="dStatus" style="margin-top:6px"></div></div>
+    <button class="btn ghost sm icon" id="dClose" aria-label="Close"><i data-i="x"></i></button>
+  </header>
+  <div class="body" id="dBody"></div>
+  <footer id="dFoot"></footer>
+</aside>
 <div class="toast" id="toast"></div>
+<div id="printArea"></div>
 
 <script>
-/* ---------- Data ---------- */
-const STATUS = {
-  pending:   { label: "Awaiting collection", cls: "s-pending" },
-  collected: { label: "Collected",           cls: "s-collected" },
-  transit:   { label: "Out for delivery",    cls: "s-transit" },
-  delivered: { label: "Delivered",           cls: "s-delivered" },
-  failed:    { label: "Delivery failed",     cls: "s-failed" },
+/* icons */
+const P={
+ home:'<path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>',
+ box:'<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>',
+ plusSq:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M12 8v8M8 12h8"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>',
+ truck:'<path d="M1 4h14v12H1zM15 8h4l4 4v4h-8"/><circle cx="5.5" cy="18.5" r="2"/><circle cx="18.5" cy="18.5" r="2"/>',
+ wallet:'<path d="M20 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15v12H5a2 2 0 0 1-2-2V6"/><circle cx="16" cy="14" r="1"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 0 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 0 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 0 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 0 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/>',
+ help:'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/>',
+ menu:'<path d="M3 6h18M3 12h18M3 18h18"/>',
+ chev:'<path d="m6 9 6 6 6-6"/>',
+ bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/>',
+ headset:'<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1v-6h3zM3 19a2 2 0 0 0 2 2h1v-6H3z"/>',
+ refresh:'<path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+ bolt:'<path d="M13 2 3 14h9l-1 8 10-12h-9z"/>',
+ cash:'<rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/>',
+ return:'<path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+ alert:'<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/>',
+ download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
+ search:'<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+ x:'<path d="M18 6 6 18M6 6l12 12"/>',
+ info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+ check:'<path d="M20 6 9 17l-5-5"/>',
+ print:'<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>'
 };
-const FLOW = ["pending", "collected", "transit", "delivered"];
-const SERVICES = { nextday: "Next Day", nextday12: "Next Day 12:00", saturday: "Saturday" };
+const ic=n=>`<svg class="i" viewBox="0 0 24 24">${P[n]||''}</svg>`;
+document.querySelectorAll('i[data-i]').forEach(el=>{el.outerHTML=ic(el.dataset.i)});
 
-const store = {
-  get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+/* data */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const CITIES=['Cairo','Giza','Alexandria','Mansoura','Tanta','Zagazig','Ismailia','Port Said','Suez','Hurghada','Assiut','Minya'];
+const STATUS={pending:'New',collected:'In progress',transit:'Heading to customer',delivered:'Delivered',failed:'Awaiting action',returning:'Heading to you',cancelled:'Cancelled'};
+const FLOW=['pending','collected','transit','delivered'];
+const SERVICES={
+  nextday:{l:'Next day',d:'Delivered next working day',x:0},
+  nextday12:{l:'Next day by 12 PM',d:'Morning delivery',x:15},
+  saturday:{l:'Saturday',d:'Weekend delivery',x:25}
 };
-
-let settings = store.get("sm_settings", { name: "My Store", email: "", addr: "", cutoff: "17:00", phone: "" });
-let shipments = store.get("sm_shipments", null) || seed();
-
-function seed() {
-  const names = ["Sarah Ahmed","James Cole","Omar Haddad","Lucy Brown","Daniel Kim","Aisha Khan","Tom Walker","Mona Saleh","Chris Evans","Nadia Ali"];
-  const cities = ["London","Manchester","Leeds","Bristol","Birmingham","Glasgow","Liverpool","Cardiff"];
-  const out = [];
-  for (let i = 0; i < 14; i++) {
-    const d = new Date(); d.setDate(d.getDate() - Math.floor(i / 3)); d.setHours(9 + (i % 7), (i * 13) % 60);
-    const st = i < 3 ? "pending" : i < 5 ? "collected" : i < 7 ? "transit" : i === 9 ? "failed" : "delivered";
-    out.push({
-      id: trackingId(), created: d.toISOString(), name: names[i % names.length], phone: "07" + (700000000 + i * 1234567),
-      addr: (10 + i) + " High Street", city: cities[i % cities.length], post: "AB" + (i + 1) + " " + (i % 9) + "CD",
-      weight: +(0.5 + (i % 5) * 1.3).toFixed(1), size: ["small","medium","large"][i % 3], service: ["nextday","nextday","nextday12","saturday"][i % 4],
-      value: 20 + i * 15, ref: "#10" + (200 + i), notes: "", status: st,
-      price: 0,
-    });
-  }
-  out.forEach(s => s.price = priceOf(s));
-  store.set("sm_shipments", out);
-  return out;
+const SIZE_X=[0,10,25];
+const fmt=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2});
+const egp=n=>'EGP '+fmt(n);
+function price({weight,size,service,cod}){
+  const base=45, w=Math.max(0,Math.ceil((+weight||1)-1))*5, s=SIZE_X[+size]||0, sv=SERVICES[service]?.x||0;
+  const c=Math.round((+cod||0))/100;
+  return {base,w,s,sv,c,total:Math.round((base+w+s+sv+c)*100)/100};
 }
+const load=k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}};
+const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+let settings=load('sm_settings');
+if(!settings||!settings.store)settings={store:'Demo Store',phone:'01000000000',addr:'12 Tahrir St, Downtown',city:'Cairo',cutoff:'17:00'};
+settings.city=settings.city||'Cairo';settings.cutoff=settings.cutoff||'17:00';
+let ships=load('sm_orders'), pickups=load('sm_pickups');
+const persist=()=>{save('sm_settings',settings);save('sm_orders',ships);save('sm_pickups',pickups)};
 
-function trackingId() {
-  return "SHP" + Math.random().toString(36).slice(2, 6).toUpperCase() + Date.now().toString().slice(-5);
-}
-
-function priceOf({ weight, size, service, value }) {
-  let p = 4.99;
-  p += Math.max(0, weight - 1) * 0.6;
-  p += { small: 0, medium: 1.5, large: 3.5 }[size] || 0;
-  p += { nextday: 0, nextday12: 3, saturday: 5 }[service] || 0;
-  if (value > 100) p += (value - 100) * 0.01;
-  return Math.round(p * 100) / 100;
-}
-
-/* ---------- Helpers ---------- */
-const $ = id => document.getElementById(id);
-const gbp = n => "£" + n.toFixed(2);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
-const badge = st => `<span class="badge ${STATUS[st].cls}">${STATUS[st].label}</span>`;
-const fmtDate = iso => new Date(iso).toLocaleString("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
-const sameDay = (a, b) => a.toDateString() === b.toDateString();
-const save = () => store.set("sm_shipments", shipments);
-
-function toast(msg) {
-  const t = $("toast"); t.textContent = msg; t.classList.add("show");
-  clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("show"), 2200);
-}
-
-/* ---------- Navigation ---------- */
-function go(view) {
-  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + view));
-  document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.view === view));
-  $("sidebar").classList.remove("open");
-  render();
-  window.scrollTo(0, 0);
-}
-function toggleMenu() { $("sidebar").classList.toggle("open"); }
-document.querySelectorAll(".nav-btn").forEach(b => b.addEventListener("click", () => go(b.dataset.view)));
-
-/* ---------- Cutoff countdown ---------- */
-function nextWorkingDay(from) {
-  const d = new Date(from); d.setDate(d.getDate() + 1);
-  while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
-  return d;
-}
-function tick() {
-  const now = new Date();
-  const [h, m] = settings.cutoff.split(":").map(Number);
-  let cutoff = new Date(now); cutoff.setHours(h, m, 0, 0);
-  let bookingDay = new Date(now);
-  const weekend = now.getDay() === 0 || now.getDay() === 6;
-  if (now >= cutoff || weekend) {
-    bookingDay = new Date(now);
-    do { bookingDay.setDate(bookingDay.getDate() + 1); } while (bookingDay.getDay() === 0 || bookingDay.getDay() === 6);
-    cutoff = new Date(bookingDay); cutoff.setHours(h, m, 0, 0);
-  }
-  const diff = Math.max(0, cutoff - now);
-  const hh = String(Math.floor(diff / 3.6e6)).padStart(2, "0");
-  const mm = String(Math.floor(diff / 6e4) % 60).padStart(2, "0");
-  const ss = String(Math.floor(diff / 1e3) % 60).padStart(2, "0");
-  $("countdown").textContent = `${hh}:${mm}:${ss}`;
-  $("cutoffLabel").textContent = settings.cutoff;
-  const del = nextWorkingDay(bookingDay);
-  const tomorrow = nextWorkingDay(new Date(now.toDateString())).toDateString() === del.toDateString() && sameDay(bookingDay, now);
-  $("deliveryDay").textContent = tomorrow ? "tomorrow" : "on " + del.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
-  return del;
-}
-
-/* ---------- Render ---------- */
-function render() {
-  $("storeNameSide").textContent = settings.name;
-  $("storeNameHi").textContent = settings.name;
-  $("todayLabel").textContent = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long", year: "numeric" });
-
-  const now = new Date();
-  const today = shipments.filter(s => sameDay(new Date(s.created), now));
-  const transit = shipments.filter(s => s.status === "collected" || s.status === "transit");
-  const delivered = shipments.filter(s => s.status === "delivered");
-  const finished = shipments.filter(s => s.status === "delivered" || s.status === "failed");
-  const month = shipments.filter(s => { const d = new Date(s.created); return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear(); });
-  const spend = month.reduce((a, s) => a + s.price, 0);
-
-  $("stToday").textContent = today.length;
-  $("stTransit").textContent = transit.length;
-  $("stDelivered").textContent = delivered.length;
-  $("stRate").textContent = (finished.length ? Math.round(delivered.length / finished.length * 100) : 100) + "% success rate";
-  $("stSpend").textContent = "£" + spend.toFixed(0);
-
-  const sorted = [...shipments].sort((a, b) => new Date(b.created) - new Date(a.created));
-  $("recentBody").innerHTML = sorted.slice(0, 6).map(s => `
-    <tr style="cursor:pointer" onclick="openDrawer('${s.id}')">
-      <td class="mono">${s.id}</td><td>${esc(s.name)}</td><td>${esc(s.city)}</td><td>${badge(s.status)}</td><td>${gbp(s.price)}</td>
-    </tr>`).join("") || `<tr><td colspan="5" class="empty">No shipments yet.</td></tr>`;
-
-  const failed = shipments.filter(s => s.status === "failed");
-  const pending = shipments.filter(s => s.status === "pending");
-  let att = "";
-  failed.forEach(s => att += `<div class="list-row"><div><strong>${esc(s.name)}</strong><div class="sub">Delivery failed · ${s.id}</div></div><button class="btn small" onclick="openDrawer('${s.id}')">Review</button></div>`);
-  if (pending.length) att += `<div class="list-row"><div><strong>${pending.length} parcel${pending.length > 1 ? "s" : ""} awaiting collection</strong><div class="sub">Driver arrives before cutoff</div></div><button class="btn small" onclick="filterTo('pending')">View</button></div>`;
-  $("attention").innerHTML = att || `<div class="empty" style="padding:12px">All clear. Nothing needs your attention.</div>`;
-
-  renderShipments();
-  renderBilling();
-}
-
-function renderShipments() {
-  const q = $("search").value.trim().toLowerCase();
-  const f = $("statusFilter").value;
-  const list = [...shipments]
-    .sort((a, b) => new Date(b.created) - new Date(a.created))
-    .filter(s => !f || s.status === f)
-    .filter(s => !q || [s.id, s.name, s.city, s.post, s.ref].join(" ").toLowerCase().includes(q));
-  $("shipCount").textContent = `${list.length} of ${shipments.length} shipments`;
-  $("shipBody").innerHTML = list.map(s => `
-    <tr>
-      <td class="mono">${s.id}</td><td>${fmtDate(s.created)}</td><td>${esc(s.name)}</td><td>${esc(s.city)}</td>
-      <td>${SERVICES[s.service]}</td><td>${badge(s.status)}</td><td>${gbp(s.price)}</td>
-      <td><button class="btn small" onclick="openDrawer('${s.id}')">Details</button></td>
-    </tr>`).join("") || `<tr><td colspan="8" class="empty">No shipments match your search.</td></tr>`;
-}
-
-function renderBilling() {
-  const groups = {};
-  shipments.forEach(s => {
-    const d = new Date(s.created); const k = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
-    (groups[k] ||= []).push(s);
+const trk=()=>'SH'+Math.floor(1e7+Math.random()*9e7);
+function seed(){
+  const names=['Mona Adel','Karim Hassan','Sara Mahmoud','Omar Farouk','Nour Ali','Youssef Samir','Hana Tarek','Ahmed Nabil','Laila Mostafa','Mostafa Ibrahim','Salma Hany','Tamer Fathy','Dina Sherif','Ali Magdy','Rana Khaled','Hossam Gamal','Yasmin Reda','Khaled Ezz'];
+  const st=['pending','pending','pending','collected','collected','transit','transit','transit','delivered','delivered','delivered','delivered','delivered','failed','failed','returning','delivered','transit'];
+  const now=Date.now(), H=36e5;
+  ships=names.map((n,i)=>{
+    const service=['nextday','nextday','nextday12','saturday'][i%4], weight=[1,2,0.5,3,1.5][i%5], size=i%3, cod=[0,350,520,1200,260,890,450][i%7];
+    const created=now-(i<8?i*1.5*H:(i-6)*20*H);
+    const s=st[i], history=[{s:'pending',t:created}];
+    const steps=s==='failed'?['collected','transit','failed']:s==='returning'?['collected','transit','failed','returning']:FLOW.slice(1,FLOW.indexOf(s)+1);
+    steps.forEach((x,k)=>history.push({s:x,t:Math.min(now,created+(k+1)*H*1.2)}));
+    if(s==='delivered'&&i%2===0)history.at(-1).t=now-i*6e5;
+    return {id:trk(),name:n,phone:'010'+String(20000000+i*4731923).slice(0,8),addr:`${10+i} Street ${i+3}`,city:CITIES[i%CITIES.length],area:'',
+      weight,size,service,cod,desc:'Clothing',ref:'ORD'+(1040+i),notes:'',open:1,fees:price({weight,size,service,cod}).total,status:s,created,history};
   });
-  const now = new Date(); const cur = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
-  $("invoiceBody").innerHTML = Object.keys(groups).sort().reverse().map(k => {
-    const list = groups[k]; const total = list.reduce((a, s) => a + s.price, 0) * 1.2;
-    const label = new Date(k + "-01").toLocaleDateString("en-GB", { month: "long", year: "numeric" });
-    const st = k === cur ? `<span class="badge s-pending">Open</span>` : `<span class="badge s-delivered">Paid</span>`;
-    return `<tr><td>${label}</td><td>${list.length}</td><td>${gbp(total)}</td><td>${st}</td></tr>`;
-  }).join("") || `<tr><td colspan="4" class="empty">No invoices yet.</td></tr>`;
-  const m = groups[cur] || []; const sub = m.reduce((a, s) => a + s.price, 0);
-  $("bCount").textContent = m.length; $("bSub").textContent = gbp(sub);
-  $("bVat").textContent = gbp(sub * 0.2); $("bTotal").textContent = gbp(sub * 1.2);
+  pickups=[{id:'PU5021',date:now+864e5,count:3,status:'Scheduled'},{id:'PU5018',date:now-864e5,count:7,status:'Completed'},{id:'PU5011',date:now-3*864e5,count:5,status:'Completed'}];
+  persist();
 }
+if(!Array.isArray(ships)||!ships.length)seed();
+if(!Array.isArray(pickups)){pickups=[];persist()}
 
-function filterTo(st) { go("shipments"); $("statusFilter").value = st; renderShipments(); }
-$("search").addEventListener("input", renderShipments);
-$("statusFilter").addEventListener("change", renderShipments);
+/* helpers */
+function toast(m){const t=$('#toast');t.innerHTML=ic('check')+m;t.classList.add('show');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('show'),2400)}
+const stTag=s=>`<span class="st ${s}">${STATUS[s]||s}</span>`;
+const dShort=t=>new Date(t).toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+const dLong=t=>new Date(t).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const codTxt=s=>s.cod?egp(s.cod):'<span class="c2">Prepaid</span>';
+function nextWorkingDay(from){const d=new Date(from);d.setDate(d.getDate()+1);while(d.getDay()===5)d.setDate(d.getDate()+1);return d}
+function cutoffDate(){const [h,m]=settings.cutoff.split(':').map(Number);const c=new Date();c.setHours(h,m,0,0);return c}
+const dayName=d=>d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'});
 
-/* ---------- Drawer ---------- */
-function openDrawer(id) {
-  const s = shipments.find(x => x.id === id); if (!s) return;
-  $("dTitle").textContent = s.id;
-  const idx = FLOW.indexOf(s.status);
-  const steps = FLOW.map((st, i) => `<li class="${s.status !== "failed" && i <= idx ? "done" : ""}"><strong>${STATUS[st].label}</strong></li>`).join("")
-    + (s.status === "failed" ? `<li class="done"><strong style="color:var(--bad)">Delivery failed</strong><div class="sub">Recipient not available</div></li>` : "");
-  const canAdvance = s.status !== "delivered" && s.status !== "failed";
-  $("dBody").innerHTML = `
-    <div style="margin-bottom:16px">${badge(s.status)}</div>
-    <dl class="kv">
-      <dt>Recipient</dt><dd>${esc(s.name)}</dd>
-      <dt>Phone</dt><dd>${esc(s.phone)}</dd>
-      <dt>Address</dt><dd>${esc(s.addr)}, ${esc(s.city)} ${esc(s.post)}</dd>
-      <dt>Service</dt><dd>${SERVICES[s.service]}</dd>
-      <dt>Parcel</dt><dd>${s.weight} kg · ${s.size}</dd>
-      <dt>Reference</dt><dd>${esc(s.ref) || "None"}</dd>
-      <dt>Booked</dt><dd>${fmtDate(s.created)}</dd>
-      <dt>Price</dt><dd>${gbp(s.price)}</dd>
-      ${s.notes ? `<dt>Notes</dt><dd>${esc(s.notes)}</dd>` : ""}
-    </dl>
-    <h3 style="font-size:14px">Tracking</h3>
-    <ul class="timeline">${steps}</ul>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-      <button class="btn small" onclick="printLabel('${s.id}')">Print label</button>
-      ${canAdvance ? `<button class="btn small" onclick="advance('${s.id}')">Mark as next step</button>` : ""}
-      ${s.status === "failed" ? `<button class="btn small" onclick="rebook('${s.id}')">Rebook delivery</button>` : ""}
-      ${s.status === "pending" ? `<button class="btn small" style="color:var(--bad)" onclick="cancelShip('${s.id}')">Cancel</button>` : ""}
-    </div>`;
-  $("overlay").classList.add("open"); $("drawer").classList.add("open");
+/* navigation */
+let orderFilter='all';
+function go(v,f){
+  $$('.view').forEach(x=>x.classList.toggle('active',x.id==='v-'+v));
+  $$('.nav a[data-view]').forEach(a=>a.classList.toggle('active',a.dataset.view===v));
+  if(v==='orders'){orderFilter=f||'all';$('#fStatus').value=orderFilter}
+  $('#side').classList.remove('open');closeDrawer();
+  render();window.scrollTo(0,0);
 }
-function closeDrawer() { $("overlay").classList.remove("open"); $("drawer").classList.remove("open"); }
-document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
-
-function advance(id) {
-  const s = shipments.find(x => x.id === id);
-  s.status = FLOW[Math.min(FLOW.indexOf(s.status) + 1, FLOW.length - 1)];
-  save(); render(); openDrawer(id); toast("Status updated: " + STATUS[s.status].label);
-}
-function rebook(id) {
-  const s = shipments.find(x => x.id === id); s.status = "pending";
-  save(); render(); openDrawer(id); toast("Delivery rebooked for the next working day");
-}
-function cancelShip(id) {
-  if (!confirm("Cancel this shipment?")) return;
-  shipments = shipments.filter(x => x.id !== id); save(); closeDrawer(); render(); toast("Shipment cancelled");
-}
-
-function printLabel(id) {
-  const s = shipments.find(x => x.id === id);
-  const w = window.open("", "_blank", "width=420,height=600");
-  if (!w) { toast("Allow popups to print labels"); return; }
-  w.document.write(`<!doctype html><title>Label ${s.id}</title>
-    <body style="font-family:system-ui;padding:20px">
-    <div style="border:2px solid #000;padding:16px;width:340px">
-      <div style="font-size:22px;font-weight:800">NEXT DAY</div>
-      <div style="font-size:12px;margin-bottom:12px">${SERVICES[s.service]}</div>
-      <div style="font-size:12px">FROM</div><div>${esc(settings.name)}<br>${esc(settings.addr)}</div><hr>
-      <div style="font-size:12px">TO</div>
-      <div style="font-size:18px;font-weight:700">${esc(s.name)}</div>
-      <div>${esc(s.addr)}<br>${esc(s.city)}<br><strong style="font-size:20px">${esc(s.post)}</strong></div><hr>
-      <div style="font-family:monospace;font-size:20px;letter-spacing:2px;text-align:center">${s.id}</div>
-      <div style="font-size:12px;text-align:center">${s.weight} kg · Ref ${esc(s.ref)}</div>
-    </div><script>print()<\/script></body>`);
-  w.document.close();
-}
-
-/* ---------- Create form ---------- */
-function formData() {
-  return {
-    name: $("fName").value.trim(), phone: $("fPhone").value.trim(), addr: $("fAddr").value.trim(),
-    city: $("fCity").value.trim(), post: $("fPost").value.trim().toUpperCase(),
-    weight: parseFloat($("fWeight").value) || 0, size: $("fSize").value, service: $("fService").value,
-    value: parseFloat($("fValue").value) || 0, ref: $("fRef").value.trim(), notes: $("fNotes").value.trim(),
-  };
-}
-function updateQuote() {
-  const d = formData();
-  $("quotePrice").textContent = gbp(priceOf(d));
-  const del = tick();
-  const when = d.service === "saturday" ? "Saturday" : del.toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "short" });
-  $("quoteEta").textContent = "Delivery " + when + (d.service === "nextday12" ? " before 12:00" : "");
-}
-$("shipForm").addEventListener("input", updateQuote);
-$("shipForm").addEventListener("reset", () => setTimeout(updateQuote));
-$("shipForm").addEventListener("submit", e => {
-  e.preventDefault();
-  const d = formData();
-  if (d.weight > 30) { toast("Max weight is 30 kg"); return; }
-  const s = { ...d, id: trackingId(), created: new Date().toISOString(), status: "pending", price: priceOf(d) };
-  shipments.unshift(s); save();
-  e.target.reset();
-  toast("Shipment booked: " + s.id);
-  go("shipments"); openDrawer(s.id);
+document.addEventListener('click',e=>{
+  const n=e.target.closest('[data-view],[data-go]');
+  if(n){e.preventDefault();go(n.dataset.view||n.dataset.go,n.dataset.f);return}
+  const r=e.target.closest('tr.rowc');if(r)openDrawer(r.dataset.id);
+  if(!e.target.closest('.dd'))$('#createMenu').classList.remove('open');
+  if(!e.target.closest('#side')&&!e.target.closest('#burger'))$('#side').classList.remove('open');
 });
+$('#burger').onclick=()=>$('#side').classList.toggle('open');
+$('#createBtn').onclick=()=>go('create');
+$('#createMore').onclick=()=>$('#createMenu').classList.toggle('open');
+$('#createMenu').onclick=e=>{const b=e.target.closest('button');if(!b)return;$('#createMenu').classList.remove('open');
+  ({order:()=>go('create'),pickup:()=>{go('pickups');requestPickup()},csv:exportCsv})[b.dataset.act]()};
+$('#viewServices').onclick=$('#servAll').onclick=()=>{go('home');$('#services').scrollIntoView({behavior:'smooth'})};
+const helpMsg=()=>toast('Support: 19000, help@shiply.example');
+$('#helpBtn').onclick=$('#support').onclick=$('#navHelp').onclick=helpMsg;
+$('#bell').onclick=()=>{const n=ships.filter(s=>s.status==='failed').length;toast(n?`${n} orders are awaiting your action`:'No new notifications')};
+$('#refresh').onclick=()=>{render();toast('Updated')};
 
-/* ---------- Settings ---------- */
-function loadSettings() {
-  $("sName").value = settings.name; $("sEmail").value = settings.email; $("sAddr").value = settings.addr;
-  $("sCutoff").value = settings.cutoff; $("sPhone").value = settings.phone;
+/* home */
+let range='today';
+$('#range').onclick=e=>{const b=e.target.closest('button');if(!b)return;range=b.dataset.r;$$('#range button').forEach(x=>x.classList.toggle('on',x===b));renderHome()};
+function inRange(s){
+  if(range==='all')return true;
+  const start=new Date();start.setHours(0,0,0,0);
+  if(range==='week')start.setDate(start.getDate()-6);
+  return s.history.at(-1).t>=start.getTime();
 }
-$("settingsForm").addEventListener("submit", e => {
+const walletNet=()=>ships.filter(s=>s.status==='delivered').reduce((a,s)=>a+(+s.cod||0)-s.fees,0);
+function renderHome(){
+  $('#sumTitle').textContent={today:"Today's summary",week:"This week's summary",all:'All time summary'}[range];
+  const open=ships.filter(x=>!['delivered','cancelled'].includes(x.status)), c=s=>open.filter(x=>x.status===s).length;
+  const L=open.concat(ships.filter(x=>x.status==='delivered'&&inRange(x))), c2=s=>L.filter(x=>x.status===s).length;
+  const done=c2('delivered'), total=L.length;
+  const expected=L.filter(x=>['pending','collected','transit'].includes(x.status)).reduce((a,x)=>a+(+x.cod||0),0);
+  const collected=L.filter(x=>x.status==='delivered').reduce((a,x)=>a+(+x.cod||0),0);
+  const pct=expected+collected?Math.round(collected/(expected+collected)*100):0;
+  const card=(t,h,body,f)=>`<div class="card ${f?'click':''}" ${f?`data-go="orders" data-f="${f}"`:''}><div class="t">${t}<span title="${h}" style="display:flex">${ic('info')}</span></div>${body}</div>`;
+  const num=(n,cls='')=>`<div class="v"><span class="display-sm ${cls}">${n}</span></div>`;
+  $('#cards').innerHTML=[
+    card('In progress','Picked up and in our hubs',num(c('collected')),'collected'),
+    card('Heading to customer','Out with a courier',num(c('transit')),'transit'),
+    card('Completed','Delivered out of all orders',`<div class="v"><span class="display-sm">${done}</span><span class="of">/ ${total}</span></div><div class="bar"><i style="width:${total?done/total*100:0}%"></i></div>`,'delivered'),
+    card('Awaiting action','Failed attempts that need you',num(c('failed'),c('failed')?'warn':''),'failed'),
+    card('Heading to you','Returns on the way back',num(c('returning')),'returning'),
+    card('New','Created, waiting for pickup',num(c('pending')),'pending'),
+    card('Expected cash','Cash on delivery still to be collected',`<div class="v"><span class="display-sm">${fmt(expected)}</span><span class="cur">EGP</span></div>`),
+    card('Collected cash','Cash on delivery collected from customers',`<div class="v"><span class="display-sm">${fmt(collected)}</span><span class="cur">EGP</span><span class="tag">${pct}%</span></div>`)
+  ].join('');
+  const rec=[...ships].sort((a,b)=>b.created-a.created).slice(0,5);
+  $('#recent').innerHTML=rec.map(s=>`<tr class="rowc" data-id="${s.id}"><td class="label-sm">${s.id}</td><td>${esc(s.name)}</td><td>${esc(s.city)}</td><td>${stTag(s.status)}</td><td>${codTxt(s)}</td></tr>`).join('');
+  $('#actN').textContent=ships.filter(s=>s.status==='failed').length;
+  $('#walletBal').textContent=fmt(walletNet());
+  const pd=new Date();pd.setDate(pd.getDate()+((7-pd.getDay())%7||7));
+  $('#payDay').textContent=dayName(pd);
+  $('#updAt').textContent=new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+}
+
+/* orders */
+$('#fStatus').innerHTML='<option value="all">All statuses</option>'+Object.entries(STATUS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+$('#fStatus').onchange=e=>{orderFilter=e.target.value;renderOrders()};
+$('#q').oninput=renderOrders;
+function renderOrders(){
+  const q=$('#q').value.trim().toLowerCase();
+  const L=ships.filter(s=>(orderFilter==='all'||s.status===orderFilter)&&(!q||[s.id,s.name,s.phone,s.city,s.ref].join(' ').toLowerCase().includes(q))).sort((a,b)=>b.created-a.created);
+  $('#ordersBody').innerHTML=L.length?L.map(s=>`<tr class="rowc" data-id="${s.id}"><td><div class="label-sm">${s.id}</div><div class="sub">${esc(s.ref)}</div></td><td><div>${esc(s.name)}</div><div class="sub">${esc(s.phone)}</div></td><td>${esc(s.city)}</td><td>${SERVICES[s.service].l}</td><td>${dShort(s.created)}</td><td>${stTag(s.status)}</td><td>${codTxt(s)}</td><td>${egp(s.fees)}</td></tr>`).join('')
+    :`<tr><td colspan="8" class="empty">No orders match your filters.</td></tr>`;
+  $('#ordersInfo').textContent=`Showing ${L.length} of ${ships.length} orders`;
+}
+
+/* drawer */
+let cur=null;
+function openDrawer(id){
+  const s=ships.find(x=>x.id===id);if(!s)return;cur=s;
+  $('#dTitle').textContent=s.id;$('#dStatus').innerHTML=stTag(s.status);
+  const tl=s.history.map((h,i)=>{const last=i===s.history.length-1;
+    return `<li class="${last&&!['delivered'].includes(h.s)?'cur':'done'}"><span class="dotc">${last&&h.s!=='delivered'?'':ic('check')}</span><div><div class="label-sm">${STATUS[h.s]}</div><div class="caption c2">${dLong(h.t)}</div></div></li>`}).join('');
+  const idx=FLOW.indexOf(s.status);
+  const next=idx>-1&&idx<3?FLOW.slice(idx+1).map(f=>`<li><span class="dotc"></span><div><div class="label-sm" style="color:var(--text2)">${STATUS[f]}</div><div class="caption c2">Upcoming</div></div></li>`).join(''):'';
+  $('#dBody').innerHTML=`
+    <div><div class="h2" style="margin-bottom:12px">Customer</div><dl class="kv"><dt>Name</dt><dd>${esc(s.name)}</dd><dt>Phone</dt><dd>${esc(s.phone)}</dd><dt>Address</dt><dd>${esc(s.addr)}${s.area?', '+esc(s.area):''}, ${esc(s.city)}</dd></dl></div>
+    <div><div class="h2" style="margin-bottom:12px">Order</div><dl class="kv"><dt>Service</dt><dd>${SERVICES[s.service].l}</dd><dt>Weight</dt><dd>${s.weight} kg</dd><dt>Contents</dt><dd>${esc(s.desc)||'Not set'}</dd><dt>Reference</dt><dd>${esc(s.ref)||'Not set'}</dd><dt>Open package</dt><dd>${s.open?'Allowed':'Not allowed'}</dd><dt>COD</dt><dd>${s.cod?egp(s.cod):'Prepaid'}</dd><dt>Shipping fees</dt><dd>${egp(s.fees)}</dd>${s.notes?`<dt>Notes</dt><dd>${esc(s.notes)}</dd>`:''}</dl></div>
+    <div><div class="h2" style="margin-bottom:12px">Tracking</div><ul class="tl">${tl}${next}</ul></div>`;
+  const b=[];
+  if(idx>-1&&idx<3)b.push(`<button class="btn primary sm" onclick="advance()">Mark as ${STATUS[FLOW[idx+1]].toLowerCase()}</button>`);
+  if(s.status==='transit')b.push(`<button class="btn basic sm" onclick="setSt('failed','Marked as failed attempt')">Failed attempt</button>`);
+  if(s.status==='failed')b.push(`<button class="btn primary sm" onclick="rebook()">Rebook delivery</button><button class="btn basic sm" onclick="setSt('returning','Return started')">Return to me</button>`);
+  if(s.status==='returning')b.push(`<button class="btn basic sm" onclick="setSt('cancelled','Return received')">Mark received</button>`);
+  b.push(`<button class="btn basic sm" onclick="printLabel()">${ic('print')}Print label</button>`);
+  if(s.status==='pending')b.push(`<button class="btn danger sm" onclick="cancelShip()">Cancel order</button>`);
+  $('#dFoot').innerHTML=b.join('');
+  $('#drawer').classList.add('open');$('#scrim').classList.add('open');$('#drawer').setAttribute('aria-hidden','false');
+}
+function closeDrawer(){$('#drawer').classList.remove('open');$('#scrim').classList.remove('open');$('#drawer').setAttribute('aria-hidden','true')}
+$('#dClose').onclick=$('#scrim').onclick=closeDrawer;
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+function setSt(s,msg){cur.status=s;cur.history.push({s,t:Date.now()});persist();render();openDrawer(cur.id);if(msg)toast(msg)}
+function advance(){setSt(FLOW[FLOW.indexOf(cur.status)+1],'Status updated')}
+function rebook(){setSt('transit','Delivery rebooked for '+dayName(nextWorkingDay(Date.now())))}
+function cancelShip(){if(confirm('Cancel this order?'))setSt('cancelled','Order cancelled')}
+function printLabel(){
+  const s=cur;
+  $('#printArea').innerHTML=`<div class="lbl-box" style="display:flex;justify-content:space-between"><b style="font:700 18px Poppins">Shiply</b><b>${SERVICES[s.service].l.toUpperCase()}</b></div>
+  <div class="lbl-box"><div class="lbl-big">${esc(s.city).toUpperCase()}</div></div>
+  <div class="lbl-box"><b>To:</b> ${esc(s.name)}<br>${esc(s.addr)}${s.area?', '+esc(s.area):''}<br>${esc(s.phone)}</div>
+  <div class="lbl-box"><b>From:</b> ${esc(settings.store)}<br>${esc(settings.addr)}, ${esc(settings.city)}</div>
+  <div class="lbl-box"><b>COD:</b> ${s.cod?egp(s.cod):'PREPAID'} &nbsp; <b>Weight:</b> ${s.weight} kg &nbsp; <b>Open:</b> ${s.open?'Yes':'No'}</div>
+  <div class="barcode"></div><div style="text-align:center;font:700 16px monospace;letter-spacing:2px">${s.id}</div>`;
+  window.print();
+}
+
+/* create */
+$('#fCity').innerHTML=$('#sCity').innerHTML=CITIES.map(c=>`<option>${c}</option>`).join('');
+$('#svcRadios').innerHTML=Object.entries(SERVICES).map(([k,v],i)=>`<label class="radio"><input type="radio" name="svc" value="${k}" ${i?'':'checked'}><b>${v.l}</b><span>${v.d}</span><span class="pr">${v.x?'+ '+egp(v.x):'Included'}</span></label>`).join('');
+let openPkg=1;
+$('#openPkg').onclick=e=>{const b=e.target.closest('button');if(!b)return;openPkg=+b.dataset.v;$$('#openPkg button').forEach(x=>x.classList.toggle('on',x===b))};
+const formVals=()=>({name:$('#fName').value.trim(),phone:$('#fPhone').value.trim(),addr:$('#fAddr').value.trim(),city:$('#fCity').value,area:$('#fArea').value.trim(),
+  weight:+$('#fWeight').value||1,size:+$('#fSize').value,service:$('input[name=svc]:checked').value,cod:Math.max(0,+$('#fCod').value||0),
+  desc:$('#fDesc').value.trim(),ref:$('#fRef').value.trim(),notes:$('#fNotes').value.trim(),open:openPkg});
+function quote(){
+  const v=formVals(),p=price(v);
+  $('#qBase').textContent=egp(p.base);$('#qW').textContent=egp(p.w);$('#qS').textContent=egp(p.s);$('#qSv').textContent=egp(p.sv);$('#qC').textContent=egp(p.c);
+  $('#qT').textContent=egp(p.total);$('#qNet').textContent=egp(Math.round((v.cod-p.total)*100)/100);
+}
+$('#shipForm').addEventListener('input',quote);$('#shipForm').addEventListener('change',quote);
+$('#shipForm').onsubmit=e=>{
   e.preventDefault();
-  settings = { name: $("sName").value.trim() || "My Store", email: $("sEmail").value.trim(), addr: $("sAddr").value.trim(), cutoff: $("sCutoff").value || "17:00", phone: $("sPhone").value.trim() };
-  store.set("sm_settings", settings); render(); tick(); toast("Settings saved");
-});
-function resetDemo() {
-  if (!confirm("Replace all shipments with demo data?")) return;
-  shipments = seed(); render(); toast("Demo data restored");
+  const v=formVals();let bad=null;
+  [['fName',!!v.name],['fPhone',/^[0-9+ ]{8,}$/.test(v.phone)],['fAddr',!!v.addr]].forEach(([id,ok])=>{const el=$('#'+id);el.style.borderColor=ok?'':'var(--danger)';if(!ok&&!bad)bad=el});
+  if(bad){bad.focus();toast('Please fill in the highlighted fields');return}
+  const now=Date.now(),s={...v,id:trk(),fees:price(v).total,status:'pending',created:now,history:[{s:'pending',t:now}]};
+  ships.unshift(s);persist();$('#shipForm').reset();openPkg=1;$$('#openPkg button').forEach((x,i)=>x.classList.toggle('on',!i));quote();
+  go('orders');openDrawer(s.id);toast('Order '+s.id+' created');
+};
+$('#clearForm').onclick=()=>{$('#shipForm').reset();quote()};
+
+/* pickups */
+function requestPickup(){
+  const ready=ships.filter(s=>s.status==='pending').length;
+  if(!ready){toast('No new orders waiting for pickup');return}
+  const d=new Date()<cutoffDate()?new Date():nextWorkingDay(Date.now());
+  pickups.unshift({id:'PU'+(5022+pickups.length),date:d.getTime(),count:ready,status:'Scheduled'});persist();render();toast('Pickup requested for '+dShort(d));
+}
+$('#reqPickup').onclick=requestPickup;
+function renderPickups(){
+  const sch=pickups.filter(p=>p.status==='Scheduled');
+  $('#pickCards').innerHTML=`<div class="card"><div class="t">Scheduled pickups</div><div class="v"><span class="display-sm">${sch.length}</span></div></div>
+  <div class="card"><div class="t">Orders ready</div><div class="v"><span class="display-sm">${ships.filter(s=>s.status==='pending').length}</span></div></div>
+  <div class="card"><div class="t">Next pickup</div><div class="v"><span class="display-sm">${sch[0]?dShort(sch[0].date):'None'}</span></div></div>
+  <div class="card"><div class="t">Pickup address</div><div class="label-sm">${esc(settings.addr)}, ${esc(settings.city)}</div></div>`;
+  $('#pickBody').innerHTML=pickups.length?pickups.map(p=>`<tr><td class="label-sm">${p.id}</td><td>${dShort(p.date)}</td><td>${p.count}</td><td><span class="st ${p.status==='Completed'?'delivered':'transit'}">${p.status}</span></td></tr>`).join(''):`<tr><td colspan="4" class="empty">No pickups yet.</td></tr>`;
 }
 
-/* ---------- CSV export ---------- */
-function exportCsv() {
-  const cols = ["id","created","name","phone","addr","city","post","service","weight","size","status","price","ref"];
-  const rows = [cols.join(",")].concat(shipments.map(s => cols.map(c => `"${String(s[c] ?? "").replace(/"/g, '""')}"`).join(",")));
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(new Blob([rows.join("\n")], { type: "text/csv" }));
-  a.download = "shipments.csv"; a.click();
+/* wallet */
+function renderWallet(){
+  const D=ships.filter(s=>s.status==='delivered'), cod=D.reduce((a,s)=>a+(+s.cod||0),0), fees=D.reduce((a,s)=>a+s.fees,0);
+  const c=(t,v,cur)=>`<div class="card"><div class="t">${t}</div><div class="v"><span class="display-sm">${v}</span>${cur?'<span class="cur">EGP</span>':''}</div></div>`;
+  $('#walletCards').innerHTML=c('Balance',fmt(walletNet()),1)+c('COD collected',fmt(cod),1)+c('Shipping fees',fmt(fees),1)+c('Delivered orders',D.length);
+  $('#walletBody').innerHTML=D.length?D.map(s=>`<tr class="rowc" data-id="${s.id}"><td class="label-sm">${s.id}</td><td>${dShort(s.history.at(-1).t)}</td><td>${egp(s.cod||0)}</td><td>${egp(s.fees)}</td><td class="label-sm">${egp(Math.round(((s.cod||0)-s.fees)*100)/100)}</td></tr>`).join(''):`<tr><td colspan="5" class="empty">No delivered orders yet.</td></tr>`;
 }
 
-/* ---------- Start ---------- */
-loadSettings(); render(); updateQuote();
-setInterval(tick, 1000);
+/* csv */
+function exportCsv(){
+  const rows=[['Tracking','Reference','Customer','Phone','Address','City','Service','Weight','COD','Fees','Status','Created']]
+    .concat(ships.map(s=>[s.id,s.ref,s.name,s.phone,s.addr,s.city,SERVICES[s.service].l,s.weight,s.cod,s.fees,STATUS[s.status],new Date(s.created).toISOString()]));
+  const csv=rows.map(r=>r.map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='shiply-orders.csv';a.click();toast('CSV exported');
+}
+$('#csvBtn').onclick=exportCsv;
+
+/* settings */
+function fillSettings(){$('#sStore').value=settings.store;$('#sPhone').value=settings.phone;$('#sAddr').value=settings.addr;$('#sCut').value=settings.cutoff;$('#sCity').value=settings.city}
+$('#setForm').onsubmit=e=>{e.preventDefault();settings={store:$('#sStore').value.trim()||'My Store',phone:$('#sPhone').value.trim(),addr:$('#sAddr').value.trim(),cutoff:$('#sCut').value||'17:00',city:$('#sCity').value};persist();render();toast('Settings saved')};
+$('#resetDemo').onclick=()=>{if(confirm('Replace all orders with demo data?')){seed();render();toast('Demo data restored')}};
+
+/* cutoff clock */
+function tick(){
+  const now=new Date(), c=cutoffDate(), passed=now>=c;
+  const target=new Date(c);if(passed)target.setDate(target.getDate()+1);
+  const ms=target-now,h=Math.floor(ms/36e5),m=Math.floor(ms%36e5/6e4),s=Math.floor(ms%6e4/1e3);
+  $('#countdown').textContent=[h,m,s].map(x=>String(x).padStart(2,'0')).join(':');
+  const deliver=passed?nextWorkingDay(nextWorkingDay(now)):nextWorkingDay(now);
+  $('#cutMsg').textContent=passed?`Today's cutoff passed. New orders deliver ${dayName(deliver)}.`:`Left to book for delivery ${dayName(deliver)}.`;
+  $('#delivTxt').textContent=dayName(nextWorkingDay(now));
+}
+
+/* render */
+function render(){
+  const ini=(settings.store||'S').trim().charAt(0).toUpperCase()||'S';
+  $('#storeName').textContent=settings.store;$('#avTop').textContent=$('#avBig').textContent=ini;
+  $('#sideCut').textContent=$('#cutTxt').textContent=settings.cutoff;
+  $('#navCount').textContent=ships.filter(s=>['pending','failed'].includes(s.status)).length;
+  renderHome();renderOrders();renderPickups();renderWallet();fillSettings();
+}
+render();quote();tick();setInterval(tick,1000);
 </script>
 </body>
 </html>
